@@ -262,6 +262,229 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的内部类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/10/说说java中的内部类/" itemprop="url">说说java中的内部类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T16:43:01+08:00">
+                2019-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="内部类基本概念"><a href="#内部类基本概念" class="headerlink" title="内部类基本概念"></a>内部类基本概念</h2><p>内部类即定义在另一个类里面的类。内部类主要可以分为四类：普通内部类(成员内部类)、局部内部类、匿名内部类以及静态内部类。</p>
+<h3 id="1-普通内部类"><a href="#1-普通内部类" class="headerlink" title="1.普通内部类"></a>1.普通内部类</h3><p>普通内部类即一个类定义在另一个类里面，下面通过代码看一下普通内部类的定义以及基本使用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="comment">//外部类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">School</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">//外部类成员</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">//外部类构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">School</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//外部类成员方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">studentInfo</span><span class="params">(Student student)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"the student name is: "</span> + student.name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//内部类</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="comment">//内部类成员</span></span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="comment">//内部类构造函数</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//内部内成员方法</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selfIntroduction</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"My name is "</span> + name + <span class="string">", I am from "</span> + School.<span class="keyword">this</span>.name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个外部类对象</span></span><br><span class="line">        School school = <span class="keyword">new</span> School(<span class="string">"Nanjing foreign language middle school"</span>);</span><br><span class="line">        <span class="comment">//new 一个内部类对象的方法为: 外部类实例.new 内部类名</span></span><br><span class="line">        School.Student student = school.new Student(<span class="string">"xiaoming"</span>);</span><br><span class="line">        <span class="comment">//调用外部类的成员方法</span></span><br><span class="line">        school.studentInfo(student);</span><br><span class="line">        <span class="comment">//调用内部类的成员方法</span></span><br><span class="line">        student.selfIntroduction();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">the student name is: xiaoming</span><br><span class="line">My name is xiaoming, I am from Nanjing foreign language middle school</span><br></pre></td></tr></table></figure>
+
+<p><strong>成员内部类规则总结：</strong></p>
+<ol>
+<li><p>内部类可以无条件访问外部类的所有成员属性和成员方法，包括外部类的private、static等成员；如果内部类的成员和外部类的成员同名，优先访问内部类的成员，此时通过如下语法访问外部类的成员<code>外部类.this.成员</code>;</p>
+</li>
+<li><p>外部类访问内部类的成员，需要先创建一个内部类对象，然后通过该内部类对象访问内部类成员；</p>
+</li>
+<li><p>创建内部类对象，需要先创建一个外部类对象，通过外部类对象创建内部类对象：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个外部类对象</span></span><br><span class="line">School school = <span class="keyword">new</span> School(<span class="string">"Nanjing foreign language middle school"</span>);</span><br><span class="line"><span class="comment">//new 一个内部类对象的方法为: 外部类实例.new 内部类名</span></span><br><span class="line">School.Student student = school.new Student(<span class="string">"xiaoming"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>外部类只能用public和default修饰（default表示包可见，public表示所有可见）。顺便说一下如果用private修饰外部类，其他类都无法访问外部类没有意义，如果用protected修饰外部类，则同包和子孙类可见，如果子孙类和该类同包，则default的权限能满足，如果子孙类与该类不同包，则public权限能覆盖，所以用protected修饰外部类就有点多余了，记住外部类只有两种修饰权限：public和default，包可见和全部可见。而内部类可以为public、protected、default以及private。</p>
+</li>
+</ol>
+<h3 id="2-局部内部类"><a href="#2-局部内部类" class="headerlink" title="2.局部内部类"></a>2.局部内部类</h3><p>局部内部类即定义在外部类的一个局部作用域的类，比如定义在一个方法里面的类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="comment">//外部类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">School</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 外部类成员</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外部类构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">School</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外部类成员方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">studentInfo</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 内部类</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class">        </span>&#123;</span><br><span class="line">            <span class="comment">// 内部类成员</span></span><br><span class="line">            <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 内部类构造函数</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.name = name;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 内部内成员方法</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selfIntroduction</span><span class="params">()</span></span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"My name is "</span> + name + <span class="string">", I am from "</span> + School.<span class="keyword">this</span>.name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        Student student = <span class="keyword">new</span> Student(<span class="string">"xiaoming"</span>);</span><br><span class="line">        student.selfIntroduction();</span><br><span class="line">        System.out.println(<span class="string">"the student name is: "</span> + student.name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个外部类对象</span></span><br><span class="line">        School school = <span class="keyword">new</span> School(<span class="string">"Nanjing foreign language middle school"</span>);</span><br><span class="line">        school.studentInfo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">My name is xiaoming, I am from Nanjing foreign language middle school</span><br><span class="line">the student name is: xiaoming</span><br></pre></td></tr></table></figure>
+
+<p><strong>局部内部类规则总结：</strong></p>
+<ol>
+<li>局部内部类的作用域限定在局部方法里面，不能用public、protected、default、private修饰局部内部类；</li>
+<li>局部内部类不只可以访问外部类的变量，还能访问局部变量，但是只能访问final的局部变量；</li>
+<li>局部内部类也没法在作用域外进行实例化，其它同成员内部类规则。</li>
+</ol>
+<h3 id="3-匿名内部类"><a href="#3-匿名内部类" class="headerlink" title="3.匿名内部类"></a>3.匿名内部类</h3><p>将局部内部类再简省以下，只创建一个类的对象，而不对该类进行命名，即为匿名内部类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个接口</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Introduction</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">selfIntroduction</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//外部类</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="comment">//外部类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">School</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 外部类成员</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外部类构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">School</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外部类成员方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">studentInfo</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 匿名内部类</span></span><br><span class="line">        Introduction introduction = <span class="keyword">new</span> Introduction()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selfIntroduction</span><span class="params">()</span></span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"I am from "</span> + School.<span class="keyword">this</span>.name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        introduction.selfIntroduction();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//main函数调用</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个外部类对象</span></span><br><span class="line">        School school = <span class="keyword">new</span> School(<span class="string">"Nanjing foreign language middle school"</span>);</span><br><span class="line">        school.studentInfo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I am from Nanjing foreign language middle school</span><br></pre></td></tr></table></figure>
+
+<p><strong>匿名内部类规则总结：</strong></p>
+<ol>
+<li><p>匿名内部类连类名都没有，所有匿名内部类没有构造函数，匿名内部类也是唯一一种没有构造器的类；</p>
+</li>
+<li><p>一般来说匿名内部类用来继承其他类或者实现接口，并不需要增加额外的方法，只需要对继承的方法进行实现或者重写，大部分匿名内部类用于接口回调；</p>
+</li>
+<li><p>匿名内部类和局部内部类只能访问final的局部成员。</p>
+</li>
+</ol>
+<h3 id="4-静态内部类"><a href="#4-静态内部类" class="headerlink" title="4.静态内部类"></a>4.静态内部类</h3><p>如果内部类不需要引用外部类的对象，则可以将内部类定义为静态内部类，用static关键字修饰内部类即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="comment">//外部类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">School</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 外部类的静态成员</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String address = <span class="string">"nanjing road #001"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义静态内部类</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Address</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="comment">// 静态内部类的成员</span></span><br><span class="line">        <span class="keyword">private</span> String postCode;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 静态内部类的构造函数</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Address</span><span class="params">(String postCode)</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.postCode = postCode;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 静态内部类成员方法</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getFullAddress</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"The full address is "</span> + School.address + <span class="string">", postCode is "</span> + postCode);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//main函数调用</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.School.Address;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        School.Address address = <span class="keyword">new</span> School.Address(<span class="string">"210000"</span>);</span><br><span class="line">        address.getFullAddress();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果输出：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The full address is nanjing road #001, postCode is 210000</span><br></pre></td></tr></table></figure>
+
+<p><strong>静态内部类规则总结：</strong></p>
+<ol>
+<li>静态内部类不需要依赖外部类的对象；</li>
+<li>静态内部类只能访问外部类的静态成员而不能访问其他实例域，很好理解，因为不依赖外部类的实例对象。</li>
+</ol>
+<h3 id="为什么局部内部类和匿名内部类只能访问final的局部变量呢？"><a href="#为什么局部内部类和匿名内部类只能访问final的局部变量呢？" class="headerlink" title="为什么局部内部类和匿名内部类只能访问final的局部变量呢？"></a>为什么局部内部类和匿名内部类只能访问final的局部变量呢？</h3><p>匿名内部类是局部内部类的一种特殊形式，局部内部类可以访问外部类的成员，也可以访问局部变量，这很好理解，因为局部内部类在局部作用域里，但是访问局部变量有一个限制，必须访问声明为final的局部变量，这是为什么呢？</p>
+<p>其实在《java核心技术卷一》里，有一段比较详细的解释：</p>
+<p>比如在外部类的成员方法start里定义了一个局部内部类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">(<span class="keyword">int</span> interval, <span class="keyword">final</span> <span class="keyword">boolean</span> beep)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">       <span class="class"><span class="keyword">class</span> <span class="title">TimePrinter</span> <span class="keyword">implements</span> <span class="title">ActionListener</span></span></span><br><span class="line"><span class="class">       </span>&#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span></span></span><br><span class="line"><span class="function">           </span>&#123;</span><br><span class="line">               Date now = <span class="keyword">new</span> Date();</span><br><span class="line">               System.out.println(<span class="string">"At the tone, the time is "</span>+now);</span><br><span class="line">               <span class="keyword">if</span>(beep)</span><br><span class="line">               &#123;</span><br><span class="line">                   Toolkit.getDefaultToolkit().beep();</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       ActionListener listener = <span class="keyword">new</span> TimePrinter();</span><br><span class="line">       Timer timer = <span class="keyword">new</span> Timer(interval, listener);</span><br><span class="line">       timer.start();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>局部内部类TimePrinter使用的是start的参数beep作为调用beep函数的flag判断，beep是一个局部变量，这里声明为final，如果beep是一个普通变量有什么问题吗？</p>
+<p>捋一下代码执行流程：</p>
+<ol>
+<li>调用start方法；</li>
+<li>调用局部内部类TimePrinter的构造函数，创建一个TimePrinter的对象listener；</li>
+<li>将listener和interval参数传递给Timer的构造函数，创建一个定时器对象timer；</li>
+<li>timer.start定时器开始执行，start方法结束，start方法的局部变量beep生命周期结束，beep不复存在了；</li>
+<li>定时器到了时间间隔，执行actionPerformed函数方法；</li>
+<li>执行到if(beep)语句，似乎beep变量不存在啊，那怎么执行呢……</li>
+<li>其实编译器很聪明的，TimePrinter类在beep被释放之前，会对start方法里的beep变量进行备份。当创建一个TimePrinter对象的时候，beep就会被传给TimePrinter的构造函数进行备份。编辑器会对所有局部变量进行检测，为每一个被访问的局部变量创建备份到构造函数函数。</li>
+</ol>
+<p>所以上面的第6步，执行到if(beep)语句，会根据备份的beep变量进行判断是否执行beep方法，从而解决了beep变量与Timer生命周期不一致的问题，但是也带来了新的问题，start方法中的beep变量和actionPerformed方法里的beep变量不是同一个，如果在acitonPerformed里对beep变量做了修改，不就有问题么。。</p>
+<p>所以要约束局部类只能访问final的局部变量，这样就不允许对beep变量进行修改，从而使得局部变量和在局部类中建立的对该变量的拷贝保持一致。</p>
+<h3 id="为什么引入内部类"><a href="#为什么引入内部类" class="headerlink" title="为什么引入内部类"></a>为什么引入内部类</h3><p>内部类其实还挺复杂的，费这么大劲引入内部类，自然还是有它的用武之地：</p>
+<ol>
+<li>可以将存在一定逻辑关系的类组织在一起，同时对外界隐藏内部类；</li>
+<li>当想要定义一个回调函数又不想编写大量代码的时候，使用匿名内部类比较方便；</li>
+<li>写事件驱动程序的时候，经常用到内部类。</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a><br><a href="https://www.cnblogs.com/dolphin0520/p/3811445.html" target="_blank" rel="noopener">https://www.cnblogs.com/dolphin0520/p/3811445.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的接口与回调/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1140,7 +1363,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
