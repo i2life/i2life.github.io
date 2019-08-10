@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Java,">
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="welcome to i2Life&apos;s blog.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="2Life">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="indroduction因为java中参数传递涉及到基本数据类型和对象引用类型，比较容易混淆，所以小结一下说说java中的方法参数传递。 参数传递主要有两种方式（当然还有一种call by name，比较老的参数传递方式，已经out了）：  call by value，即按值传递，表示方法接收的是调用者传递的值，形参是实参的一份拷贝。 call by reference，即按引用传递，表示方法接收">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说说java中的方法参数传递">
+<meta property="og:url" content="http://yoursite.com/2019/08/10/说说java中的方法参数传递/index.html">
 <meta property="og:site_name" content="2Life">
-<meta property="og:description" content="welcome to i2Life&apos;s blog.">
+<meta property="og:description" content="indroduction因为java中参数传递涉及到基本数据类型和对象引用类型，比较容易混淆，所以小结一下说说java中的方法参数传递。 参数传递主要有两种方式（当然还有一种call by name，比较老的参数传递方式，已经out了）：  call by value，即按值传递，表示方法接收的是调用者传递的值，形参是实参的一份拷贝。 call by reference，即按引用传递，表示方法接收">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-10T07:57:45.981Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2Life">
-<meta name="twitter:description" content="welcome to i2Life&apos;s blog.">
+<meta name="twitter:title" content="说说java中的方法参数传递">
+<meta name="twitter:description" content="indroduction因为java中参数传递涉及到基本数据类型和对象引用类型，比较容易混淆，所以小结一下说说java中的方法参数传递。 参数传递主要有两种方式（当然还有一种call by name，比较老的参数传递方式，已经out了）：  call by value，即按值传递，表示方法接收的是调用者传递的值，形参是实参的一份拷贝。 call by reference，即按引用传递，表示方法接收">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/10/说说java中的方法参数传递/">
 
 
 
 
 
-  <title>2Life</title>
+  <title>说说java中的方法参数传递 | 2Life</title>
   
 
 
@@ -143,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -217,9 +218,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -249,9 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/10/说说java中的方法参数传递/" itemprop="url">说说java中的方法参数传递</a></h1>
+          <h1 class="post-title" itemprop="name headline">说说java中的方法参数传递</h1>
         
 
         <div class="post-meta">
@@ -301,9 +300,7 @@
       
 
       
-        
-          
-            <h2 id="indroduction"><a href="#indroduction" class="headerlink" title="indroduction"></a>indroduction</h2><p>因为java中参数传递涉及到基本数据类型和对象引用类型，比较容易混淆，所以小结一下说说java中的方法参数传递。</p>
+        <h2 id="indroduction"><a href="#indroduction" class="headerlink" title="indroduction"></a>indroduction</h2><p>因为java中参数传递涉及到基本数据类型和对象引用类型，比较容易混淆，所以小结一下说说java中的方法参数传递。</p>
 <p>参数传递主要有两种方式（当然还有一种call by name，比较老的参数传递方式，已经out了）：</p>
 <ol>
 <li>call by value，即按值传递，表示方法接收的是调用者传递的值，形参是实参的一份拷贝。</li>
@@ -335,8 +332,6 @@
 
 <h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p><a href>java核心技术.卷一</a></p>
 
-          
-        
       
     </div>
     
@@ -351,14 +346,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -368,10 +369,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -379,6 +381,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -399,8 +405,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -451,6 +466,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#indroduction"><span class="nav-number">1.</span> <span class="nav-text">indroduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">2.</span> <span class="nav-text">conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example"><span class="nav-number">3.</span> <span class="nav-text">example</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#example-1-不能修改基本数据类型的参数"><span class="nav-number">3.1.</span> <span class="nav-text">example 1:不能修改基本数据类型的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#example-2-可以修改一个对象参数的状态"><span class="nav-number">3.2.</span> <span class="nav-text">example 2:可以修改一个对象参数的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#example-3：不能改变对象参数的引用关系"><span class="nav-number">3.3.</span> <span class="nav-text">example 3：不能改变对象参数的引用关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -584,6 +615,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
