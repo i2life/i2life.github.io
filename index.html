@@ -262,6 +262,207 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的static关键字/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/22/说说java中的static关键字/" itemprop="url">说说java中的static关键字</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-22T11:01:15+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>java中的static关键字用的地方还是挺多的，静态变量、静态方法、静态代码块等等，感觉需要好好总结一下，本文就说说java中的static关键字。</p>
+<h2 id="static关键字的六中用法"><a href="#static关键字的六中用法" class="headerlink" title="static关键字的六中用法"></a>static关键字的六中用法</h2><p>在java中static关键字表示“全局”或者“静态”的意思，被static修饰则不需要依赖于具体的对象实例，可以方便在没有创建对象的情况下进行调用（方法/变量等）。</p>
+<p>我们知道静态方法、静态变量等，其实在java中static关键字一共有六种用法：</p>
+<blockquote>
+<ol>
+<li>静态变量；</li>
+<li>静态常量；</li>
+<li>静态方法；</li>
+<li>静态导入；</li>
+<li>静态代码块；</li>
+<li>静态内部类；</li>
+</ol>
+</blockquote>
+<h2 id="一-静态变量"><a href="#一-静态变量" class="headerlink" title="一. 静态变量"></a>一. 静态变量</h2><p>static变量和非static变量的区别是：static变量不依赖于具体的对象实例，是属于类的，static变量由所有的对象共享，在内存中只有一个副本。非static变量是依赖于对象实例的，每个对象拥有不同的变量副本。通过一个例子看的比较清楚：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> totalStudentNum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">int</span> studentNum = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Student student1 = <span class="keyword">new</span> Student();</span><br><span class="line">        student1.studentNum++;</span><br><span class="line">        student1.totalStudentNum++;</span><br><span class="line"></span><br><span class="line">        Student student2 = <span class="keyword">new</span> Student();</span><br><span class="line">        student2.studentNum++;</span><br><span class="line">        student2.totalStudentNum++;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"Student.totalStudentNum is: "</span> + Student.totalStudentNum);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student.totalStudentNum is: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二-静态常量"><a href="#二-静态常量" class="headerlink" title="二. 静态常量"></a>二. 静态常量</h2><p>被static修饰的常量即为静态常量<code>static final PI = 3.14</code>，同静态变量一样，静态常量是属于类的，所有对象共享，不依赖于具体的对象实例。</p>
+<p><code>System.out</code>其实就是一个静态常量：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">System</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> PrintStream out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三-静态方法"><a href="#三-静态方法" class="headerlink" title="三. 静态方法"></a>三. 静态方法</h2><p>可以认为静态方法是没有this参数的方法，静态方法不依赖于对象实例，所以在静态方法中不能访问实例域，在静态方法中只能访问静态域；但是非静态方法可以访问静态域。</p>
+<p>最常见的static方法即main方法，main方法之所以为static，是因为程序在执行main方法的时候没有创建任何对象，只能通过类名来访问。</p>
+<h3 id="构造函数是静态方法吗？"><a href="#构造函数是静态方法吗？" class="headerlink" title="构造函数是静态方法吗？"></a>构造函数是静态方法吗？</h3><p>静态方法中是没有this参数的，而构造函数中可以使用this参数，所以认为构造函数不是static方法。</p>
+<p>一般static方法适合如下场景：</p>
+<blockquote>
+<p>一个方法不需要访问对象状态，所需要的参数都是通过显示提供的；<br>一个方法只需要访问类的静态域。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	System.out.println(add(<span class="number">10</span>,<span class="number">11</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> a+b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-静态导入"><a href="#四-静态导入" class="headerlink" title="四.静态导入"></a>四.静态导入</h2><p>静态导入是java5中的一个特性，import不仅可以导入类，还可以导入静态方法和静态域。</p>
+<p>比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.*;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以使用System的静态方法和静态域了，而不用在前面加类的前缀。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.Math.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.*;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">Main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	out.println(pow(<span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">        out.println(max(<span class="number">1</span>,<span class="number">24</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五-静态代码块"><a href="#五-静态代码块" class="headerlink" title="五. 静态代码块"></a>五. 静态代码块</h2><p>静态代码块，就是用static修饰的代码块，作用是对静态属性进行初始化。静态代码块可以有多个，JVM加载类时会按照顺序执行这些静态代码块。</p>
+<p>关于代码块，主要分为四类：</p>
+<h3 id="普通代码块"><a href="#普通代码块" class="headerlink" title="普通代码块"></a>普通代码块</h3><p>即正常的比如一个方法{}之间的代码段；</p>
+<h3 id="静态代码块"><a href="#静态代码块" class="headerlink" title="静态代码块"></a>静态代码块</h3><p>用static修饰的代码块</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> totalNum;</span><br><span class="line">    <span class="comment">//静态代码块</span></span><br><span class="line">    <span class="keyword">static</span></span><br><span class="line">    &#123;</span><br><span class="line">    	totalNum = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化代码块"><a href="#初始化代码块" class="headerlink" title="初始化代码块"></a>初始化代码块</h3><p>在一个类中，不带任何修饰{}包含的代码段，只要构造类的对象，这些块就会被执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">//初始化块</span></span><br><span class="line">    &#123;</span><br><span class="line">    	name = <span class="string">"xiaoming"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>初始化块和静态代码块的区别</strong>：</p>
+<blockquote>
+<ol>
+<li>静态代码块只会执行一次，有多个静态代码块按顺序执行；</li>
+<li>初始化代码块，每次创建对象都会执行；</li>
+<li>执行顺序：静态代码块&gt;初始化代码块&gt;构造函数</li>
+</ol>
+</blockquote>
+<h3 id="同步代码块"><a href="#同步代码块" class="headerlink" title="同步代码块"></a>同步代码块</h3><p>同步代码块多用于线程互斥，用synchronized修饰的{}包含的代码，表示同一时间只能有一个线程进入同步代码块。</p>
+<h2 id="六-静态内部类"><a href="#六-静态内部类" class="headerlink" title="六. 静态内部类"></a>六. 静态内部类</h2><p>用static修饰的内部类即为静态内部类，静态内部类不依赖于外部类的实例。</p>
+<p>静态内部类不需要依赖外部类的对象；<br>静态内部类只能反问外部类的静态成员而不能访问其他域。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的lambda表达式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1714,7 +1915,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
