@@ -262,6 +262,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的接口和抽象类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/10/说说java中的接口和抽象类/" itemprop="url">说说java中的接口和抽象类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T16:14:34+08:00">
+                2019-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在java中，抽象类和interface是面向对象编程的两个比较重要的概念，抽象类和interface都是为了对对象进行更好的抽象。二者有一些相似的地方，但也有很多不同之处，所以总结一下java的接口和抽象类。</p>
+<h2 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h2><p>抽象类的概念的提出，其实是为了对对象进行一个更高层次的抽象。比如学生和老师都可以继承自Person这么一个类，在Person类里可以定义一些通用属性，比如姓名年龄等，这些都比较好定义，在Perosn类里还可以顶一个通用方法thisIsMyRole(),如果是学生则输出身份信息是学生，如果是老师，则输出身份信息是老师，那么这个方法在Person类里就不好定义了，因为在Person类还不知道具体是什么角色，应该输出什么信息。</p>
+<p>所以java提出了抽象方法的概念：通过关键字abstract进行修饰，只有方法声明而没有具体实现。基本格式为abstract void fucntionName();。</p>
+<p>抽象方法只是充当着占位的角色，具体实现在子类实现。</p>
+<p>java规定，包含一个或多个抽象方法的类必须声明为抽象类，因为抽象类包含有未具体实现的方法，所以抽象类不能实例化，抽象类存在的意义就是被继承。</p>
+<p>一般我们理解包含抽象方法的类为抽象类，实际上只要是被abstract修饰的类都是抽象类，即使该类不包含抽象方法，所以不包含抽象方法的类也可以是抽象类。</p>
+<p>除了抽象方法以外，抽象类还可以包含实例域和实例方法。</p>
+<h3 id="example"><a href="#example" class="headerlink" title="example"></a>example</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个抽象类Person，包含一个抽象方法thisIsMyRole()</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">thisIsMyRole</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义Student类和Teacher类均继承自Person，分别实现thisIsMyRole方法</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Teacher</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.setName(name);</span><br><span class="line">        <span class="keyword">super</span>.setAge(age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">thisIsMyRole</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"the role of "</span> + <span class="keyword">super</span>.getName() + <span class="string">" is teacher."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.setName(name);</span><br><span class="line">        <span class="keyword">super</span>.setAge(age);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">thisIsMyRole</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"the role of "</span> + <span class="keyword">super</span>.getName() + <span class="string">" is student."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//main函数调用</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Teacher mrZhang = <span class="keyword">new</span> Teacher(<span class="string">"MrZhang"</span>, <span class="number">30</span>);</span><br><span class="line">        Student xiaoming = <span class="keyword">new</span> Student(<span class="string">"xiaoming"</span>, <span class="number">15</span>);</span><br><span class="line"></span><br><span class="line">        mrZhang.thisIsMyRole();</span><br><span class="line">        xiaoming.thisIsMyRole();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">the role of MrZhang is teacher.</span><br><span class="line">the role of xiaoming is student.</span><br></pre></td></tr></table></figure>
+
+<p>关于抽象类总结</p>
+<blockquote>
+</blockquote>
+<p>1.一般，对于一个父类，如果它的某个方法在父类中不好实现，或者说实现没有什么具体的意义，必须根据子类的实际情况进行不同的实现，则可以将这个方法定义为abstract方法，包含该方法的类定义为abstarct类；<br>2.抽象方法必须为public或者protected（如果为默认或者private，则不能被子类继承）；<br>3.抽象类不能被实例化；<br>4.如果子类继承一个抽象类，则子类要实现父类的抽象方法，如果子类没有实现父类的抽象方法，则子类也必须声明为抽象类。</p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>interface技术主要用来描述类具有什么功能，但是不给出每个功能的具体实现。interface可以理解成对对象行为（或对象功能）的一个抽象。</p>
+<p>基本格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">interfaceName</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="comment">//接口中只能包含常量，默认均为public static final</span></span><br><span class="line">    <span class="keyword">double</span> PI = <span class="number">3.14</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//接口中只能包含abstract方法，默认均为public abstract方法</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">function1</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一个类可以实现多个接口</span></span><br><span class="line"><span class="keyword">public</span> className implements interface1,interface2</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//需要实现接口的每一个方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="抽象类和接口的区别"><a href="#抽象类和接口的区别" class="headerlink" title="抽象类和接口的区别"></a>抽象类和接口的区别</h2><h3 id="语法层面的区别"><a href="#语法层面的区别" class="headerlink" title="语法层面的区别"></a>语法层面的区别</h3><blockquote>
+<p>1.抽象类可以包含具体的方法实现，接口中的方法均为public abstract；<br>2.抽象类可以博阿含不同类型的成员，接口中的成员只能是public static final；<br>3.抽象类可以包含实例域或静态方法，接口中不能包含实例域或静态方法；<br>4.抽象类只能单一继承，接口可以多继承。</p>
+</blockquote>
+<h3 id="设计层面的区别"><a href="#设计层面的区别" class="headerlink" title="设计层面的区别"></a>设计层面的区别</h3><blockquote>
+<p>1.抽象类是对对象的抽象，是is-A的关系，子类是父类的一种；而接口是对行为的抽象，是has-A的关系，一个类实现了一个接口，可以认为该类具有这个接口的能力。比如Student和Teacher都可以继承自Person，学生和老师都是Person这种理解没有问题，打篮球是一种能力，可以把打篮球封装成一个接口BasketballLever,一个Student或Teacher对象实现了这个接口，说明该学生或者老师具有一定篮球水平的能力。</p>
+</blockquote>
+<blockquote>
+<p>2.抽象类是一种模板式设计，比如要新增一个共有属性，在Person类里面添加一个属性就可以；而接口是一种辐射式设计，比如在BasketballLever接口里新增一个方法灌篮dunk，那么所有实现了BasketballLever接口的类都要进行相应的改动，这些类都要对dunk方法进行实现。</p>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a><br><a href="http://www.cnblogs.com/dolphin0520/p/3811437.html" target="_blank" rel="noopener">http://www.cnblogs.com/dolphin0520/p/3811437.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的方法参数传递/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -471,7 +642,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
