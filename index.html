@@ -262,6 +262,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的断言/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/22/说说java中的断言/" itemprop="url">说说java中的断言</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-22T11:44:12+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>断言也是java中的一种异常处理手段，主要用于开发和测试阶段对程序的调试。相比于抛出异常和捕获异常，断言处理机制允许在测试期间在代码中插入一些断言检查语句，当代码发布的时候通过使能和去使能断言开关可以灵活的控制是否执行断言检查，这样不会因为有大量的异常判断而导致程序性能降低。</p>
+<h2 id="一-断言的基本语法"><a href="#一-断言的基本语法" class="headerlink" title="一. 断言的基本语法"></a>一. 断言的基本语法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> 条件</span><br><span class="line"><span class="keyword">assert</span> 条件 : 表达式</span><br></pre></td></tr></table></figure>
+
+<p>如果条件是false，则抛出AssertionError异常，在第二种形式中，表达式将被传入AssertionError构造器，并转换成一个消息字符串，对异常进行一个详细描述。</p>
+<p>代码示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Scanner input = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> number = input.nextInt();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 断言判断输入的参数是否为正整数</span></span><br><span class="line">        <span class="keyword">assert</span> number &gt; <span class="number">0</span> : <span class="string">"input number is not positive!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>编辑器开启断言编译</strong><br>编辑器默认一般都是不开启断言的，所以我们要手动开启断言，以idea为例：<br>Run-&gt;Edit Configurations-&gt;在Configuration的VM optons里输入-ea(-enableAssertions的缩写)即可。</p>
+<p>输入-1，结果输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.AssertionError: input number is not positive!</span><br><span class="line">	at com.Main.main(Main.java:<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">Process finished with exit code <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二-断言使用场景"><a href="#二-断言使用场景" class="headerlink" title="二. 断言使用场景"></a>二. 断言使用场景</h2><ol>
+<li><p>在私有方法中使用assert作为输入参数的校验<br>公有方法一般不使用assert进行参数教研，公有方法调用是开放的，入参不可控，调用方获得AssertionError错误信息，可能导致程序终止。</p>
+</li>
+<li><p>在流程控制中不可能达到的地方使用assert<br>assert此时表示的意义是：程序执行到这里就是错误的。</p>
+</li>
+</ol>
+<p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的异常处理机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1865,181 +2024,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的方法参数传递/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="i2Life">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/10/说说java中的方法参数传递/" itemprop="url">说说java中的方法参数传递</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T15:47:22+08:00">
-                2019-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="indroduction"><a href="#indroduction" class="headerlink" title="indroduction"></a>indroduction</h2><p>因为java中参数传递涉及到基本数据类型和对象引用类型，比较容易混淆，所以小结一下说说java中的方法参数传递。</p>
-<p>参数传递主要有两种方式（当然还有一种call by name，比较老的参数传递方式，已经out了）：</p>
-<ol>
-<li>call by value，即按值传递，表示方法接收的是调用者传递的值，形参是实参的一份拷贝。</li>
-<li>call by reference，即按引用传递，表示方法接收的时调用者提供的变量的地址，形参和实参具有相同的地址。</li>
-</ol>
-<p>根据参数传递方式形参和实参的关系，不难理解一个方法可以修改传递引用所对应的变量的值，因为形参和实参具有相同的地址；而不能修改值传递所对应的变量值，因为形参只是实参的拷贝，修改副本不会改变原件。</p>
-<h2 id="conclusion"><a href="#conclusion" class="headerlink" title="conclusion"></a>conclusion</h2><p>那java是call by value还是call by reference呢？明确一下结论：</p>
-<blockquote>
-<p>java的参数传递采用的是call by value，也就是说方法得到的是实参变量的一份拷贝，方法是修改不了实参变量的。但是呢，如果传递的实参是一个可变对象类型呢？我们知道java中任何对象变量的值都是对存储在另外一个地方的对象的引用，这个时候形参是实参的一份拷贝，换句话说形参对象也是实参对象的一份引用，call by value没法通过修改形参对象的引用关系来改变实参对象的引用关系，但是可以通过修改形参对象的状态来修改实参对象的状态的。举例说，传递一个参数Student类对象指向学生a给方法，方法不能让该对象指向另一个学生b，但是可以改变学生a的学好、姓名等属性。</p>
-</blockquote>
-<p>进一步明确结论：</p>
-<blockquote>
-<p>java的参数传递采用的是call by value方式；<br>一个方法不能修改一个基本数据类型的参数；<br>一个方法可以改变一个对象参数的状态；<br>一个方法不能实现让一个对象参数引用另外一个对象。</p>
-</blockquote>
-<h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><h3 id="example-1-不能修改基本数据类型的参数"><a href="#example-1-不能修改基本数据类型的参数" class="headerlink" title="example 1:不能修改基本数据类型的参数"></a>example 1:不能修改基本数据类型的参数</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> money = <span class="number">100</span>;</span><br><span class="line">        changeMoney(money);</span><br><span class="line">        System.out.println(<span class="string">"After changeMoeny is called, money is: "</span> + money);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">changeMoney</span><span class="params">(<span class="keyword">int</span> money)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        money *= <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">After changeMoeny is called, money is: <span class="number">100</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="example-2-可以修改一个对象参数的状态"><a href="#example-2-可以修改一个对象参数的状态" class="headerlink" title="example 2:可以修改一个对象参数的状态"></a>example 2:可以修改一个对象参数的状态</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个Student类</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String idNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getIdNumber</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIdNumber</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//main函数调用</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 初始化詹姆斯是03一代的状元秀</span></span><br><span class="line">        Student james = <span class="keyword">new</span> Student(<span class="string">"2003001"</span>);</span><br><span class="line">        <span class="comment">// 初始化科比是96一代的状元秀</span></span><br><span class="line">        Student kobe = <span class="keyword">new</span> Student(<span class="string">"1996001"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 然而我们知道，科比是96黄金一代的13顺位，所以尝试对其ID进行修改</span></span><br><span class="line">        changeId(kobe, <span class="string">"1996013"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"After changId, kobe's idNumber is: "</span> + kobe.getIdNumber());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">changeId</span><span class="params">(Student student, String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        student.setIdNumber(idNumber);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//发现科比的顺位ID被成功修改过来了</span></span><br><span class="line">After changId, kobe<span class="string">'s idNumber is: 1996013</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="example-3：不能改变对象参数的引用关系"><a href="#example-3：不能改变对象参数的引用关系" class="headerlink" title="example 3：不能改变对象参数的引用关系"></a>example 3：不能改变对象参数的引用关系</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// 初始化詹姆斯是03一代的状元秀</span></span><br><span class="line">        Student james = <span class="keyword">new</span> Student(<span class="string">"2003001"</span>);</span><br><span class="line">        <span class="comment">// 初始化科比是96一代的状元秀</span></span><br><span class="line">        Student kobe = <span class="keyword">new</span> Student(<span class="string">"1996001"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 然而我们知道，科比是96黄金一代的13顺位，所以尝试对其ID进行修改</span></span><br><span class="line">        <span class="comment">//让kobe指向一个新的Student对象</span></span><br><span class="line">        changeStudent(kobe, <span class="keyword">new</span> Student(<span class="string">"1996013"</span>));</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"After changeStudent, kobe's idNumber is: "</span> + kobe.getIdNumber());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">changeStudent</span><span class="params">(Student student, Student newStudent)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        student = newStudent;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引用关系并未发生改变，仍然输出之前对象的信息</span></span><br><span class="line">After changeStudent, kobe<span class="string">'s idNumber is: 1996001</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2083,7 +2074,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
