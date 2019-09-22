@@ -262,6 +262,425 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的集合框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/22/说说java中的集合框架/" itemprop="url">说说java中的集合框架</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-22T12:39:41+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>选择合适的数据结构是优雅的解决问题的关键之一。</p>
+<p>java提供了一组集合框架帮助我们实现常用的数据结构，今天就对java中的集合进行一个总结。</p>
+<h2 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h2><p>java集合类库构成了集合类的框架。java集合框架将接口与实现分离，接口定义集合的基本方法，在实现类里对这些方法进行实现。为了减少实现类要实现接口的所有方法带来的繁琐，java集合框架还定义了一些抽象类，实现类也可以直接继承抽象类，这样实现类可以只实现想实现的方法。</p>
+<p>java集合包含两个基本的接口:Collection和Map。Collection又分为三个子类：List、Set、Queue。常用的集合实现类有：ArrayList、LinkedList、HashSet、LinkedHashSet、HashMap以及LinkedHashMap等。</p>
+<h2 id="Collection接口"><a href="#Collection接口" class="headerlink" title="Collection接口"></a>Collection接口</h2><p>Collection接口是单元素集合的父接口，定义了很多方法：</p>
+<p>对于这些方法的详细说明可以参照API文档，下面对Collection接口的三个子接口:List、Set、Queue进行介绍。</p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>List接口是Collection的子接口，List接口可以用来定义一个有序的、元素可重复的集合。</p>
+<p>List集合中每个元素都有对应的索引，可以通过索引来访问指定位置的集合元素，List集合默认按照元素的添加顺序设置元素的索引，比如第一个添加的元素索引为0……</p>
+<h4 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h4><p>ArrayList和Vector类都是基于数组实现的List集合，所以ArrayList和Vector类封装了一个动态的、允许再分配的Object[]数组。ArrayList或Vector对象使用initalCapacity参数来设置该数组的长度，当向ArrayList或Vector中添加元素超过了该数组的长度时，他们的initalCapacity会自动增加。</p>
+<p><strong>遍历ArrayList的方法一：</strong><br>迭代器遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ArrayList&lt;String&gt; names = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        names.add(<span class="string">"a"</span>);</span><br><span class="line">        names.add(<span class="string">"b"</span>);</span><br><span class="line">        Iterator iter = names.iterator();</span><br><span class="line">        <span class="keyword">while</span> ((iter).hasNext()) &#123;</span><br><span class="line">            System.out.println(iter.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>遍历ArrayList的方法二：</strong><br>索引遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ArrayList&lt;String&gt; names = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        names.add(<span class="string">"a"</span>);</span><br><span class="line">        names.add(<span class="string">"b"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; names.size(); i++) &#123;</span><br><span class="line">            System.out.println(names.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>遍历ArrayList的方法三：</strong><br>foreach循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(String name:names)</span><br><span class="line">&#123;</span><br><span class="line">	System.out.println(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过索引遍历ArrayList的效率最高，迭代器访问效率最低。</p>
+<p><strong>ArrayList和Vector的区别：</strong></p>
+<blockquote>
+<ol>
+<li>ArrayList是线程不安全的，Vector是线程安全的；</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>Vector的性能比ArrayList差。</li>
+</ol>
+</blockquote>
+<h4 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h4><p>LinkedList是基于链表实现的List集合，插入和删除元素的效率较高。所以需要经常在集合中间插入或删除元素，可以考虑选用LinkedList集合。</p>
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><p>Set接口也是扩展自Collection接口，与List不同，Set不允许重复的元素，Set接口有3个具体的实现类：HashSet、LinkedHashSet、TreeSet。</p>
+<h5 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h5><p>HashSet使用Hash算法来存储集合中的元素，具有很好的存取和查找性能。<br><strong>HashSet的特点：</strong></p>
+<blockquote>
+<ol>
+<li>不能保证元素的顺序；</li>
+<li>HashSet不是同步的，如果多个线程同时访问一个HashSet，则必须通过同步机制来保证线程安全；</li>
+<li>集合元素值可以是null。</li>
+</ol>
+</blockquote>
+<h5 id="LinkedHashSet"><a href="#LinkedHashSet" class="headerlink" title="LinkedHashSet"></a>LinkedHashSet</h5><p>LinkedHashSet是用一个链表实现来对HashSet进行扩展，它支持对规则集内的元素排序，使得元素是以插入的顺序来保存的。</p>
+<p>当遍历LinkedHashSet时，将会按照元素的添加顺序来访问集合中的元素，由于要维护元素的插入顺序，所以性能略低于HashSet，但在迭代访问Set里的全部元素时，有很好的性能。</p>
+<h5 id="TreeSet"><a href="#TreeSet" class="headerlink" title="TreeSet"></a>TreeSet</h5><p>TreeSet是一个有序的Set，可以确保集合元素处于排序状态，不是插入顺序。</p>
+<h4 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h4><p>Queue是一种先进先出的数据结构，Queue接口也是扩展自Collection接口。</p>
+<p>因为LinkedList类实现了Deque接口，所以我们通常可以使用LinkedList来创建一个队列：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Queue&lt;String&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        queue.offer(<span class="string">"a"</span>);</span><br><span class="line">        queue.offer(<span class="string">"b"</span>);</span><br><span class="line">        <span class="keyword">while</span> (queue.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.println(queue.poll());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Map接口"><a href="#Map接口" class="headerlink" title="Map接口"></a>Map接口</h2><p>Map是用来存储键值对的容器类，在Map中键可以是任意类型的对象，但不能有重复的键，每个Key都对应一个value。</p>
+<p>Map接口有3个具体的实现类：HashMap、LinkedHashMap、TreeMap。</p>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>看一下HashMap的构造函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认构造函数</span></span><br><span class="line">HashMap()</span><br><span class="line"></span><br><span class="line"><span class="comment">//指定容量大小的构造函数</span></span><br><span class="line">HashMap(<span class="keyword">int</span> capacity)</span><br><span class="line"></span><br><span class="line"><span class="comment">//指定容量大小和加载因子的构造函数</span></span><br><span class="line">HashMap(<span class="keyword">int</span> capacity, <span class="keyword">float</span> loadFactor)</span><br><span class="line"></span><br><span class="line"><span class="comment">//包含子Map的构造函数</span></span><br><span class="line">HashMap(Map&lt;? extends K, ? extends V&gt; map)</span><br></pre></td></tr></table></figure>
+
+<p>从构造函数中，了解到两个重要的元素：容量大小(capacity)和加载因子(loadFactor)。<br>容量是哈希表的容量，初始容量是哈希表在创建时的容量(即DEFAULT_INITIAL_CAPACITY=1&lt;&lt;4)。</p>
+<p>加载因子是哈希表在其容量自动增加前可以达到多满的一种尺度。当哈希表中的条目数超过了加载因子与当前容量的乘积时，则要对该哈希表进行resize操作，从而哈希表将具有大约两倍的桶数。</p>
+<p>通常，默认加载因子是0.75，这是在时间和空间成本上的一种折中。加载因子过高虽然减少了空间开销，但同时也增加了查询成本，在设置容量时应该考虑到映射中所需要的条目数和加载因子，以便最大限度地减少resize操作次数。</p>
+<p><strong>HashMap的遍历方式：</strong></p>
+<blockquote>
+<ol>
+<li>遍历HashMap的键值对；<br>第一步：根据EntrySet()获取HashMap的键值对的Set集合。<br>第二步：通过Iterator迭代器遍历第一步得到的集合。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>遍历HashMap的键<br>第一步：根据KeySet()获取HashMap的“键”的Set集合。<br>第二步：通过Iterator迭代器遍历第一步得到的集合。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>遍历HashMap的值<br>第一步：根据value()获取HashMap的值的集合。<br>第二步：通过Iterator迭代器遍历第一步得到的集合。</li>
+</ol>
+</blockquote>
+<h3 id="LinkedHashMap"><a href="#LinkedHashMap" class="headerlink" title="LinkedHashMap"></a>LinkedHashMap</h3><p>HashSet有一个linkedHashSet子类，HashMap也有一个LinkedHashMap子类；LinkedHashMap使用双向链表来维护Key-value对的次序。</p>
+<p>LinkedHashMap需要维护元素的插入顺序，因此性能略低于HashMap的性能；但是因为它以链表来维护内部顺序，所以在迭代访问Map里的全部元素时有较好的性能，迭代输出LinkedHashMap的元素时，将会按照添加key-value对的顺序输出。</p>
+<p>本质上来讲，LinkedHashMap=散列表+循环双向链表。</p>
+<h3 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h3><p>TreeMap是SortedMap接口的实现类，TreeMap是一个有序的key-value集合，它是通过红黑树来实现的，每个key-value对即作为红黑树的一个节点。</p>
+<h2 id="线程安全的集合"><a href="#线程安全的集合" class="headerlink" title="线程安全的集合"></a>线程安全的集合</h2><p>上面主要对java集合框架中的一些常用接口和类进行了介绍，包括Collection和Map接口及他们的抽象类和常用的具体实现类。下面介绍一下其他几个特殊的集合类：</p>
+<h3 id="Vector"><a href="#Vector" class="headerlink" title="Vector"></a>Vector</h3><p>前面已经提到，java设计者在对之前的容器进行重新设计时保留了一些数据结构，其中就有Vector，用法上Vector与ArrayList基本一致，不同之处在与Vector使用了关键字synchronized将访问和修改向量的方法都变成同步的了，所以Vector是线程安全的。</p>
+<h3 id="Stack"><a href="#Stack" class="headerlink" title="Stack"></a>Stack</h3><p>Stack，栈类，继承自Vector。</p>
+<h3 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h3><p>HashTable和前面介绍的HashMap比较类似，它也是一个散列表，存储的内容是键值对映射，不同之处在于，HahsTable继承自Ditionary，HashTable中的函数都是同步的，HashTable也是线程安全的。</p>
+<h3 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h3><p>Concurrent，并发，从名字就可以看出ConcurrentHashMap是HashMap的线程安全版，同HashMap相比，ConcurrentHashMap不仅保证了访问的线程安全性，而且在效率上也有较大提高。</p>
+<h3 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h3><p>CopyOnWriteArrayList是一个线程安全的List接口的实现，它使用了ReenTrantLock锁来保证在并发情况下提供高性能的读取</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的泛型-三/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/22/说说java中的泛型-三/" itemprop="url">说说java中的泛型(三)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-22T12:32:07+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="泛型中的继承规则"><a href="#泛型中的继承规则" class="headerlink" title="泛型中的继承规则"></a>泛型中的继承规则</h2><p>我们定义这样一个泛型类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Result</span>&lt;<span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> T value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getValue</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(T value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么<code>Result&lt;Person&gt;</code>和<code>Result&lt;Student&gt;</code>有什么关系呢，其中<code>Student</code>是<code>Person</code>类的子类。</p>
+<p>答案是他们没有关系，<code>Result&lt;Student&gt;</code>并不是<code>Result&lt;Person&gt;</code>的子类，通常无论S和T有什么关系，<code>Result&lt;S&gt;</code>和<code>Result&lt;T&gt;</code>都没有什么关系。</p>
+<p>泛型类可以扩展或实现其他泛型类或泛型接口，这跟普通的类和接口没有区别。</p>
+<h2 id="通配符类型"><a href="#通配符类型" class="headerlink" title="通配符类型"></a>通配符类型</h2><h3 id="通配符的子类型限定"><a href="#通配符的子类型限定" class="headerlink" title="通配符的子类型限定"></a>通配符的子类型限定</h3><p>通过泛型类型的继承规则，我们知道，<code>Result&lt;Student&gt;</code>和<code>Result&lt;Person&gt;</code>并没有什么关系，换言之他们是不同的类型，下面我们想定义一个printName方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首先定义Student类和Person类</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义printName函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Person xiaoming = <span class="keyword">new</span> Person(<span class="string">"xiaoming"</span>);</span><br><span class="line"></span><br><span class="line">        Student xiaoqiang = <span class="keyword">new</span> Student(<span class="string">"xiaoqiang"</span>);</span><br><span class="line"></span><br><span class="line">        Result&lt;Person&gt; input1 = <span class="keyword">new</span> Result&lt;&gt;();</span><br><span class="line">        input1.setValue(xiaoming);</span><br><span class="line"></span><br><span class="line">        Result&lt;Student&gt; input2 = <span class="keyword">new</span> Result&lt;&gt;();</span><br><span class="line">        input2.setValue(xiaoqiang);</span><br><span class="line"></span><br><span class="line">        printName(input1);</span><br><span class="line"></span><br><span class="line">        printName(input2);<span class="comment">//报编译错误</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printName</span><span class="params">(Result&lt;Person&gt; input)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(input.getValue().getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们发现printName(input2);语句报编译错误，如果我们想打印Result<student>类型入参的姓名，得再定义一个printName方法，参数类型为Result<student>。</student></student></p>
+<p>这样就显得很冗余，那么可以考虑使用通配符来解决：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printName</span><span class="params">(Result&lt;? extends Person&gt; input)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   System.out.println(input.getValue().getName());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>? extends Person</code>表示<code>Person</code>的所有子类。</p>
+<h3 id="通配符的超类型限定"><a href="#通配符的超类型限定" class="headerlink" title="通配符的超类型限定"></a>通配符的超类型限定</h3><p>通配符除了可以指定子类型限定，还可以指定超类型限定，语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? <span class="keyword">super</span> Student</span><br></pre></td></tr></table></figure>
+
+<p>表示Student类的所有超类型。</p>
+<h2 id="泛型类型的约束与局限"><a href="#泛型类型的约束与局限" class="headerlink" title="泛型类型的约束与局限"></a>泛型类型的约束与局限</h2><p>最后总结一下泛型的约束与局限性，大多数约束都是由于类型擦除导致的。</p>
+<blockquote>
+<ol>
+<li>不能使用基本类型实例化类型参数。<br>因此没有Result<double>，只有Result<double>，这是因为类型擦除导致的，擦除之后Result类的成员为Object类型，而Object不能存储double这样的基本类型。</double></double></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>运行时类型查询只适用原始类型。<br>因为虚拟机中的对象总有一个特定的非泛型类型，所以所有的类型查询只产生原始类型。<br>比如if(a instanceof Pair<string>，实际上等价于if(a instanceof Pair<t>。</t></string></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>不能抛出也不能捕获泛型类异常。<br>事实上，泛型类扩展Throwable都不合法：public class Problem<t> extends Exception{…}不能通过编译。</t></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li>参数化类型的数组不合法<br>Pair<string>[] table = new pair<string>[10]是错误的。</string></string></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="5">
+<li>不能实例化类型变量。<br>不能使用像new T();T.class之类的表达式。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="6">
+<li>泛型类的静态上下文中类型变量无效</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span>&lt;<span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> T <span class="title">getSingleInstance</span><span class="params">()</span><span class="comment">//Error</span></span></span><br><span class="line"><span class="function">    </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的泛型-二/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1767,343 +2186,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的接口与回调/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="i2Life">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/10/说说java中的接口与回调/" itemprop="url">说说java中的接口与回调</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T16:40:04+08:00">
-                2019-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="接口与回调"><a href="#接口与回调" class="headerlink" title="接口与回调"></a>接口与回调</h2><p>callback是一种常见的设计模式，在这种模式中，可以指定在某个特定事件发生后应该采取的动作。比如说，有一个老师发布了一项任务，让一个学生去跑50m，跑完后学生主动告诉老师跑的时间，老师进行成绩登记。在这个过程中，首先老师给学生发布任务，可以理解是老师调用学生，然后学生执行完跑步这个动作后，需要主动通知老师跑的时间，这个时候是学生反过来调用老师，这个就是比较通俗的回调逻辑了。</p>
-<p>通过上面的例子，我们可以很明显的看到，这里有一个循环调用，老师调用学生，学生反调老师，如果只定义一个Teacher类和一个Student类，就会存在循环依赖，如果Teacher和Student分属不同的组件，就会导致组件间的循环依赖，这样会导致编译错误，因为编译器不知道先编译哪个组件。</p>
-<p>那么通过接口就可以很好的解决这个问题了：</p>
-<p>可以让Teacher实现一个接口ScoreInterface，在该接口里定义一个登记分数的方法recordScore(Double timeSpend)，老师在发布任务方法pubulishTask()里调用学生的doRun()方法，让学生执行跑步动作，调用doRun()方法的时候，Teacher把自己的实例对象以ScoreInterface接口对象的形式传给Student对象；</p>
-<p>Student对象执行doRun()方法，执行完后，根据doRun()方法传过来的ScoreInterface接口对象调用recordScore(Double timeSpend)方法，从而实现把跑的时间通知给老师，让老师登记分数这样一个动作。</p>
-<p>这样就避免了循环依赖，Teacher依赖Student和ScoreInterface，Student依赖ScoreInterface，Teacher和Student之间就不存在相互依赖了。</p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义接口ScoreInterface</span></span><br><span class="line"><span class="keyword">package</span> com.publicInterface;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ScoreInterface</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">recordScore</span><span class="params">(Double timeSpend)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义一个Teacher类，实现该接口</span></span><br><span class="line"><span class="keyword">package</span> com.teacher;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.Person;</span><br><span class="line"><span class="keyword">import</span> com.publicInterface.ScoreInterface;</span><br><span class="line"><span class="keyword">import</span> com.student.Student;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> <span class="keyword">implements</span> <span class="title">ScoreInterface</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">publishTask</span><span class="params">(Student student, <span class="keyword">int</span> length)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Teacher publish the task, run "</span> + length + <span class="string">"ｍ."</span>);</span><br><span class="line">        student.doRun(<span class="keyword">this</span>, length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">recordScore</span><span class="params">(Double timeSpend)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(timeSpend&lt;<span class="number">7</span>)</span><br><span class="line">            System.out.println(<span class="string">"Well done. Excellent."</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            System.out.println(<span class="string">"Good"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义学生类</span></span><br><span class="line"><span class="keyword">package</span> com.student;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.publicInterface.ScoreInterface;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doRun</span><span class="params">(ScoreInterface scoreInterface, <span class="keyword">int</span> length)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (length == <span class="number">50</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">"Begin to Run."</span>);</span><br><span class="line">            System.out.println(<span class="string">"Run finished, my time spend is 6.8s."</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        scoreInterface.recordScore(<span class="number">6.8</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//main函数</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.student.Student;</span><br><span class="line"><span class="keyword">import</span> com.teacher.Teacher;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Teacher teacher = <span class="keyword">new</span> Teacher();</span><br><span class="line">        Student student = <span class="keyword">new</span> Student();</span><br><span class="line">        teacher.publishTask(student, <span class="number">50</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Teacher publish the task, run <span class="number">50</span>ｍ.</span><br><span class="line">Begin to Run.</span><br><span class="line">Run finished, my time spend is <span class="number">6.8</span>s.</span><br><span class="line">Well done. Excellent.</span><br></pre></td></tr></table></figure>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的clone以及浅拷贝和深拷贝/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="i2Life">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/10/说说java中的clone以及浅拷贝和深拷贝/" itemprop="url">说说java中的clone以及浅拷贝和深拷贝</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T16:31:37+08:00">
-                2019-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="java中的clone方法"><a href="#java中的clone方法" class="headerlink" title="java中的clone方法"></a>java中的clone方法</h2><p>超类Object有一个protected的方法clone()，该方法返回Object对象的一个拷贝。我们知道所有的类都继承自Object，也就是所有的类都有clone方法，是不是直接调用clone()方法就可以对一个对象进行克隆呢？<br>然而并不是，在《java核心技术》里有这么一句话：”子类只能调用受保护的clone方法克隆它自己”，啥意思，这句话琢磨了半天，clone方法是protected的没问题啊，protected的访问范围包括同一个包的其他类和该类的子类，所有的类都是Object类的子类，所以所有的子类可以正常访问clone方法，没什么问题啊，我们写一个具体的例子看一看：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个Boy类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Boy</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//main函数调用</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Boy kobe = <span class="keyword">new</span> Boy(<span class="string">"kobe"</span>,<span class="number">25</span>);</span><br><span class="line">        Boy bryant = (Boy)kobe.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们发现报了编译错误：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error:(<span class="number">12</span>, <span class="number">31</span>) java: clone() 在 java.lang.Object 中是 <span class="keyword">protected</span> 访问控制</span><br></pre></td></tr></table></figure>
-
-<p>似乎有点明白”子类只能调用受保护的clone方法克隆它自己”这句话了，要克隆Boy对象，那么只能在Boy类里面调用clone方法，在Main类里调用clone方法只能克隆Main对象。</p>
-<p>那么对代码做一下修改，在Boy类里面调用clone方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Boy</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个public方法，调用clone方法对boy对象进行克隆</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boy <span class="title">copyOfBoy</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (Boy)<span class="keyword">this</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//main函数里调用copyOfBoy是否能对Boy对象进行克隆呢</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        Boy kobe = <span class="keyword">new</span> Boy(<span class="string">"kobe"</span>,<span class="number">25</span>);</span><br><span class="line">        Boy bryant = (Boy)kobe.copyOfBoy();</span><br><span class="line">        System.out.println(<span class="string">"bryant's name is: "</span>+bryant.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们觉得这样应该是可行的，但是抛了异常：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.CloneNotSupportedException: com.Boy</span><br><span class="line">	at java.base/java.lang.Object.clone(Native Method)</span><br><span class="line">	at com.Boy.copyOfBoy(Boy.java:<span class="number">36</span>)</span><br><span class="line">	at com.Main.main(Main.java:<span class="number">11</span>)</span><br></pre></td></tr></table></figure>
-
-<p>CloneNotSuported，这个是由于java的克隆机制决定的，因为Boy类没有实现接口Cloneable，java规定要想对一个类对象进行克隆，这个类必须要实现Cloeable接口。关于这个约束，似乎没少被喷，引用自某乎”这是java的一个设计缺陷，是个很糟糕的设计，如果java在今天被重新设计的话，多半就不会设计成这个样子了”。</p>
-<p>但是既然有这么个机制约束，我们还是得弄清楚，为什么会抛这个异常。java对象要支持clone功能，但是不是所有的类都可以克隆，所有java就想让用户自己来标记哪些类可以克隆，如果这个类需要克隆，就给这个类一个标记，但是并没有像final这些关键字一样提供一个关键字来修饰类的克隆属性，java是通过让类实现一个接口的方式进行标记该类是否可被克隆，也就是Cloneable接口，像Cloneable这种接口就是一种标记接口。顺便说两句标记接口：java中把没有定义任何方法和常量的接口称为标记接口，也就是说这种接口不像正常的接口那样是用来描述类的某种功能的，只是单纯的对类进行标记，常用的三个标记接口为RandomAccess、Cloneable、Serializable。</p>
-<p>那么我们基本上就知道了java进行clone的一个过程：JVM首先检查要clone的对象的类有没有打上Cloneable的标记，如果有这个标记，就进行clone，如果没有这个标记则抛异常，所有上面抛出的异常也就不难理解了。</p>
-<p>那么对Boy类实现Cloneable接口即可：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Boy</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个public方法，调用clone方法对boy对象进行克隆</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boy <span class="title">copyOfBoy</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (Boy)<span class="keyword">this</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        Boy kobe = <span class="keyword">new</span> Boy(<span class="string">"kobe"</span>,<span class="number">25</span>);</span><br><span class="line">        Boy bryant = (Boy)kobe.copyOfBoy();</span><br><span class="line">        System.out.println(<span class="string">"kobe's name is: "</span>+kobe.getName());</span><br><span class="line">        System.out.println(<span class="string">"bryant's name is: "</span>+bryant.getName());</span><br><span class="line">        <span class="comment">//对克隆对象进行修改</span></span><br><span class="line">        bryant.setName(<span class="string">"bryant"</span>);</span><br><span class="line">        System.out.println(<span class="string">"kobe's name is: "</span>+kobe.getName());</span><br><span class="line">        System.out.println(<span class="string">"bryant's name is: "</span>+bryant.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kobe<span class="string">'s name is: kobe</span></span><br><span class="line"><span class="string">bryant'</span>s name is: kobe</span><br><span class="line">kobe<span class="string">'s name is: kobe</span></span><br><span class="line"><span class="string">bryant'</span>s name is: bryant</span><br></pre></td></tr></table></figure>
-
-<p>我们发现，成功地对Boy对象进行了拷贝，并且改变bryant的成员，kobe的成员并没有受到影响（这就是跟引用的区别了，如果直接让bryant=kobe，看似是拷贝，但是改变bryant的成员，kobe的成员也会同步被修改）。</p>
-<p>但是呢，这里我们调用的方法是copyOfBoy，名字太别扭了，既然是clone，那么如果调用kobe.clone()方法不是更合适么，把方法名copyOfBoy替换成clone即可，其实就是对父类的clone方法进行了重写，注意一下，copyOfBoy里调用的是this.clone()，如果将copyOfBoy替换成clone，this.clone()需要替换成super.clone()，表示调用的是父类的clone方法，不然就形成递归了，会导致栈溢出。</p>
-<p><strong>总结一下，对象克隆的步骤：</strong></p>
-<blockquote>
-<p>step1:implements Cloneable接口；<br>step2:重写clone方法为public。</p>
-</blockquote>
-<h2 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h2><p>上面我们已经很清楚的实现了对象clone，改变bryant的name，kobe的成员没有受到影响，但是呢，如果Boy包含可变对象的成员变量呢，这个时候clone对象修改该可变成员，原对象的成员是否受到影响呢？我们看一看具体的代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个coach类</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Coach</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Coach</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Boy新增一个coach成员</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> Coach coach;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Boy</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个public方法，调用clone方法对boy对象进行克隆</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boy <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> (Boy)<span class="keyword">super</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Coach <span class="title">getCoach</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> coach;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCoach</span><span class="params">(Coach coach)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.coach = coach;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//对复制后的对象的coach成员进行修改，原对象的coach成员是否受影响</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        Boy kobe = <span class="keyword">new</span> Boy(<span class="string">"kobe"</span>,<span class="number">25</span>);</span><br><span class="line">        Coach coach = <span class="keyword">new</span> Coach(<span class="string">"Jakson"</span>);</span><br><span class="line">        kobe.setCoach(coach);</span><br><span class="line">        Boy bryant = (Boy)kobe.clone();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"kobe's coach name is: "</span>+kobe.getCoach().getName());</span><br><span class="line">        System.out.println(<span class="string">"bryant's coach name is: "</span>+bryant.getCoach().getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//对bryant的coach成员进行修改</span></span><br><span class="line">        bryant.getCoach().setName(<span class="string">"Warton"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"kobe's coach name is: "</span>+kobe.getCoach().getName());</span><br><span class="line">        System.out.println(<span class="string">"bryant's coach name is: "</span>+bryant.getCoach().getName());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kobe<span class="string">'s coach name is: Jakson</span></span><br><span class="line"><span class="string">bryant'</span>s coach name is: Jakson</span><br><span class="line">kobe<span class="string">'s coach name is: Warton</span></span><br><span class="line"><span class="string">bryant'</span>s coach name is: Warton</span><br></pre></td></tr></table></figure>
-
-<p>我们发现改变bryant的coach的名字，kobe的coach的名字也被同步修改了，这说明clone方法默认是浅拷贝。</p>
-<p>为了实现深拷贝，需要对每一个可变对象成员对象均进行clone：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Coach</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Coach</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Coach <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (Coach) <span class="keyword">super</span>.clone();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">private</span> Coach coach;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Boy</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//重写clone方法,对coach成员也进行clone</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boy <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">      Boy result = (Boy)<span class="keyword">super</span>.clone();</span><br><span class="line">      result.coach = (Coach)<span class="keyword">this</span>.coach.clone();</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Coach <span class="title">getCoach</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> coach;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCoach</span><span class="params">(Coach coach)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.coach = coach;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        Boy kobe = <span class="keyword">new</span> Boy(<span class="string">"kobe"</span>,<span class="number">25</span>);</span><br><span class="line">        Coach coach = <span class="keyword">new</span> Coach(<span class="string">"Jakson"</span>);</span><br><span class="line">        kobe.setCoach(coach);</span><br><span class="line">        Boy bryant = (Boy)kobe.clone();</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"kobe's coach name is: "</span>+kobe.getCoach().getName());</span><br><span class="line">        System.out.println(<span class="string">"bryant's coach name is: "</span>+bryant.getCoach().getName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//对bryant的coach成员进行修改</span></span><br><span class="line">        bryant.getCoach().setName(<span class="string">"Warton"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"kobe's coach name is: "</span>+kobe.getCoach().getName());</span><br><span class="line">        System.out.println(<span class="string">"bryant's coach name is: "</span>+bryant.getCoach().getName());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kobe<span class="string">'s coach name is: Jakson</span></span><br><span class="line"><span class="string">bryant'</span>s coach name is: Jakson</span><br><span class="line">kobe<span class="string">'s coach name is: Jakson</span></span><br><span class="line"><span class="string">bryant'</span>s coach name is: Warton</span><br></pre></td></tr></table></figure>
-
-<p>我们发现改变bryant的coach成员，kobe的coach成员并没有受到影响，至此已经实现了深拷贝。但是假如一个对象有好多可变对象成员，要实现深拷贝，岂不是要对每一个成员均进行clone，不是很麻烦吗？是的，需要对每一个成员都要clone，java还有另外一种方式实现深拷贝，Serializable序列化，关于这个下回再说。</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2154,7 +2236,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
