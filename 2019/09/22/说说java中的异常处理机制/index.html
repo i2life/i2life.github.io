@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="“每天上班干嘛的？“”写bug的啊“。对于程序开发来说，bug太正常了，有的bug是开发人员的疏漏造成的，有的bug跟用户的操作以及程序运行的环境有关，但是不管怎么说，遇到bug总归不是一件愉悦的事情，那么如何优雅的处理程序中的bug呢，怎么把一件不怎么愉悦的事情变得稍微愉悦一点呢？java使用一种异常处理（exception handing）机制来处理程序中的异常。 一. 异常分类java中的所">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说说java中的异常处理机制">
+<meta property="og:url" content="http://yoursite.com/2019/09/22/说说java中的异常处理机制/index.html">
+<meta property="og:site_name" content="i2Life">
+<meta property="og:description" content="“每天上班干嘛的？“”写bug的啊“。对于程序开发来说，bug太正常了，有的bug是开发人员的疏漏造成的，有的bug跟用户的操作以及程序运行的环境有关，但是不管怎么说，遇到bug总归不是一件愉悦的事情，那么如何优雅的处理程序中的bug呢，怎么把一件不怎么愉悦的事情变得稍微愉悦一点呢？java使用一种异常处理（exception handing）机制来处理程序中的异常。 一. 异常分类java中的所">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-22T09:09:47.889Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="说说java中的异常处理机制">
+<meta name="twitter:description" content="“每天上班干嘛的？“”写bug的啊“。对于程序开发来说，bug太正常了，有的bug是开发人员的疏漏造成的，有的bug跟用户的操作以及程序运行的环境有关，但是不管怎么说，遇到bug总归不是一件愉悦的事情，那么如何优雅的处理程序中的bug呢，怎么把一件不怎么愉悦的事情变得稍微愉悦一点呢？java使用一种异常处理（exception handing）机制来处理程序中的异常。 一. 异常分类java中的所">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/22/说说java中的异常处理机制/">
+
+
+
+
+
+  <title>说说java中的异常处理机制 | i2Life</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">i2Life</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">welcom to i2Life's page</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的异常处理机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">说说java中的异常处理机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-22T11:08:23+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>“每天上班干嘛的？“”写bug的啊“。对于程序开发来说，bug太正常了，有的bug是开发人员的疏漏造成的，有的bug跟用户的操作以及程序运行的环境有关，但是不管怎么说，遇到bug总归不是一件愉悦的事情，那么如何优雅的处理程序中的bug呢，怎么把一件不怎么愉悦的事情变得稍微愉悦一点呢？java使用一种异常处理（exception handing）机制来处理程序中的异常。</p>
+<h2 id="一-异常分类"><a href="#一-异常分类" class="headerlink" title="一. 异常分类"></a>一. 异常分类</h2><p>java中的所有异常均派生自Throwable类，Throwable类派生出Error类和Exception类。</p>
+<p><strong>Error类</strong>：Error类及其子类的实例描述了java运行时系统的内部错误和资源耗尽错误，代表的是jvm本身的错误，应用程序不应该抛出这种类型的异常，因为对于这类异常，上层应用程序也无能为力，所以我们更应该关注Excepton类的异常。</p>
+<p><strong>Exception类</strong>：Exception类又派生出两个分支，一个是RuntimeException类；一个是其他异常。由程序错误导致的（比如访问空指针、数组越界、错误的类型转换等）异常为RuntimeException，而由于IO问题，用户输入类型不匹配等导致的异常属于其他异常。</p>
+<p><strong>Error和Exception的区别</strong>：Error通常是指灾难性的致命错误，程序无法控制和处理，当出现这种错误时，jvm一般会终止线程；Exception通常是可以被程序处理的，并且在程序中应该尽可能的去处理这些异常。</p>
+<h3 id="已检查异常与未检查异常"><a href="#已检查异常与未检查异常" class="headerlink" title="已检查异常与未检查异常"></a>已检查异常与未检查异常</h3><p><strong>未检查异常</strong>：java语言规范将Error类以及RuntimeException类的所有异常称为未检查异常。对于这种异常我们应该修正代码，而不是通过异常处理器进行处理。</p>
+<p><strong>已检查异常</strong>：其他的异常称为已检查异常。对于这类异常，要么用try-catch语句进行捕获处理，或者通过throws语句抛出。</p>
+<h2 id="二-异常处理机制"><a href="#二-异常处理机制" class="headerlink" title="二. 异常处理机制"></a>二. 异常处理机制</h2><p>java中的异常处理机制本质上是:抛出异常+捕获异常。</p>
+<h3 id="抛出异常（throw和throws）"><a href="#抛出异常（throw和throws）" class="headerlink" title="抛出异常（throw和throws）"></a>抛出异常（throw和throws）</h3><p>java中的异常抛出使用throw和throws关键字来实现。</p>
+<p>throw：一般用于抛出异常，后面接具体的异常对象；throws可以单独使用，但是throw要么和try-catch-finally语句配套使用，要么与throws配套使用。</p>
+<p>throws：在方法签名后，用于声明该方法可能抛出的异常。</p>
+<p>对于已检查异常要么进行捕获，要么进行抛出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Scanner input = <span class="keyword">new</span> Scanner(<span class="keyword">new</span> File(<span class="string">"D:\\test.txt"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> number = input.nextInt();</span><br><span class="line">        <span class="keyword">if</span> (number &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NumberFormatException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="捕获异常-try-catch-finally语句"><a href="#捕获异常-try-catch-finally语句" class="headerlink" title="捕获异常(try-catch-finally语句)"></a>捕获异常(try-catch-finally语句)</h3><p>捕获异常的格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//code1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//code2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//code3</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//code4</span></span><br></pre></td></tr></table></figure>
+
+<p>try:用于监听，将要被监听的代码放在try语句块之内，一旦发现程序异常，异常就会被抛出；<br>catch：用于捕获异常，匹配到异常后，对异常进行处理，多重catch语句时，注意子类在前，父类在后；<br>finally：始终会执行到，用于关闭文件和资源释放。</p>
+<h2 id="三-异常链"><a href="#三-异常链" class="headerlink" title="三. 异常链"></a>三. 异常链</h2><p>在catch语句中可以抛出一个异常，这样相当于对捕获的异常进行了一个包装，改变异常的类型，比如子系统A供系统B调用，如果子系统A异常了，只是想知道子系统A是否故障，可以在子系统A的catch语句里再次抛出异常：throw new SystemAException()。其中SystemAException为自定义的表示系统A故障了的异常。</p>
+<p>但是这样有一个问题，在系统B里不知道具体的原始异常是什么，只知道封装后的异常。可以采用异常链的方式，将原始异常设置为新异常的”诱饵”：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//code</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(Exception e)</span><br><span class="line">&#123;</span><br><span class="line">	Throwable se = <span class="keyword">new</span> SystemAException();</span><br><span class="line">    se.initcause(e);</span><br><span class="line">    <span class="keyword">throw</span> se;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，当捕获到异常后，通过Throwable e = se.getCause()就可以获得原始异常了。</p>
+<h2 id="四-自定义异常"><a href="#四-自定义异常" class="headerlink" title="四. 自定义异常"></a>四. 自定义异常</h2><p>如果标准异常库不能充分描述异常问题，可以自定义异常，定义一个类继承Exception或者继承Excpetion的子类即可，定义的类应该包括两个构造器，一个默认构造器，一个带有详细描述信息的构造器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义异常</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyExceptoin</span> <span class="keyword">extends</span> <span class="title">Exception</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyExceptoin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyExceptoin</span><span class="params">(String gripe)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(gripe);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//抛出自定义异常</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileNotFoundException;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, MyExceptoin</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Scanner input = <span class="keyword">new</span> Scanner(<span class="keyword">new</span> File(<span class="string">"D:\\test.txt"</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> number = input.nextInt();</span><br><span class="line">        <span class="keyword">if</span> (number &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> MyExceptoin();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/22/说说java中的static关键字/" rel="next" title="说说java中的static关键字">
+                <i class="fa fa-chevron-left"></i> 说说java中的static关键字
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/22/说说java中的断言/" rel="prev" title="说说java中的断言">
+                说说java中的断言 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description">welcome to i2Life's page</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-异常分类"><span class="nav-number">1.</span> <span class="nav-text">一. 异常分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#已检查异常与未检查异常"><span class="nav-number">1.1.</span> <span class="nav-text">已检查异常与未检查异常</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-异常处理机制"><span class="nav-number">2.</span> <span class="nav-text">二. 异常处理机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#抛出异常（throw和throws）"><span class="nav-number">2.1.</span> <span class="nav-text">抛出异常（throw和throws）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#捕获异常-try-catch-finally语句"><span class="nav-number">2.2.</span> <span class="nav-text">捕获异常(try-catch-finally语句)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-异常链"><span class="nav-number">3.</span> <span class="nav-text">三. 异常链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-自定义异常"><span class="nav-number">4.</span> <span class="nav-text">四. 自定义异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

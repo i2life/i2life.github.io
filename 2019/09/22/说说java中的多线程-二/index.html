@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="线程同步在前面提到过，多线程会有线程安全的问题，如果多个线程同时去访问共享资源（并发访问），可能导致程序运行错误。 如何解决由于并发访问而导致的线程安全问题呢？ 一般都是采用线程同步互斥访问的方法来处理，”序列化访问临界资源”，即在同一时间，只允许一个线程访问临界资源。 java中通常有两种方法来实现线程同步：synchronized机制和同步阻塞队列。 synchronized机制有一个互斥锁的">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说说java中的多线程(二)">
+<meta property="og:url" content="http://yoursite.com/2019/09/22/说说java中的多线程-二/index.html">
+<meta property="og:site_name" content="i2Life">
+<meta property="og:description" content="线程同步在前面提到过，多线程会有线程安全的问题，如果多个线程同时去访问共享资源（并发访问），可能导致程序运行错误。 如何解决由于并发访问而导致的线程安全问题呢？ 一般都是采用线程同步互斥访问的方法来处理，”序列化访问临界资源”，即在同一时间，只允许一个线程访问临界资源。 java中通常有两种方法来实现线程同步：synchronized机制和同步阻塞队列。 synchronized机制有一个互斥锁的">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-22T08:52:28.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="说说java中的多线程(二)">
+<meta name="twitter:description" content="线程同步在前面提到过，多线程会有线程安全的问题，如果多个线程同时去访问共享资源（并发访问），可能导致程序运行错误。 如何解决由于并发访问而导致的线程安全问题呢？ 一般都是采用线程同步互斥访问的方法来处理，”序列化访问临界资源”，即在同一时间，只允许一个线程访问临界资源。 java中通常有两种方法来实现线程同步：synchronized机制和同步阻塞队列。 synchronized机制有一个互斥锁的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/22/说说java中的多线程-二/">
+
+
+
+
+
+  <title>说说java中的多线程(二) | i2Life</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">i2Life</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">welcom to i2Life's page</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的多线程-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">说说java中的多线程(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-22T16:47:49+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h2><p>在前面提到过，多线程会有线程安全的问题，如果多个线程同时去访问共享资源（并发访问），可能导致程序运行错误。</p>
+<p>如何解决由于并发访问而导致的线程安全问题呢？</p>
+<p>一般都是采用线程同步互斥访问的方法来处理，”序列化访问临界资源”，即在同一时间，只允许一个线程访问临界资源。</p>
+<p>java中通常有两种方法来实现线程同步：synchronized机制和同步阻塞队列。</p>
+<h3 id="synchronized机制"><a href="#synchronized机制" class="headerlink" title="synchronized机制"></a>synchronized机制</h3><p>有一个互斥锁的概念，对临界资源加上互斥锁后，线程只有获得了该临界资源的互斥锁才能访问该资源。</p>
+<p>在java中每一个对象都有一个内部的互斥锁，如果一个方法用synchronized关键字声明，则对象的锁会保护整个方法，那么如果需要调用该方法，必须获得内部的锁对象。</p>
+<p>内部对象锁只有一个相关条件（相关条件：就是线程获得锁对象之后，可能有一些条件判断才能继续执行，而这些条件又必须其他的线程执行才能满足，这个时候就需要对当前对象进行释放锁）。</p>
+<p>看一个具体的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrintNum</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">" print num "</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义线程类</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">      PrintNum.printNum();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//main函数中起两个线程，并start</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Thread threadOne = <span class="keyword">new</span> Thread(<span class="keyword">new</span> MyThread());</span><br><span class="line"></span><br><span class="line">        threadOne.start();</span><br><span class="line"></span><br><span class="line">        Thread threadTwo = <span class="keyword">new</span> Thread(<span class="keyword">new</span> MyThread());</span><br><span class="line">        threadTwo.start();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Thread-<span class="number">1</span> print num <span class="number">0</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">0</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">1</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">1</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">2</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">2</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">3</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">3</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">4</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>线程0和线程1交叉打印数字。</p>
+<p>现在将printNum方法声明为synchronized：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrintNum</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">" print num "</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Thread-<span class="number">0</span> print num <span class="number">0</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">1</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">2</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">3</span></span><br><span class="line">Thread-<span class="number">0</span> print num <span class="number">4</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">0</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">1</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">2</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">3</span></span><br><span class="line">Thread-<span class="number">1</span> print num <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>使用了synchronized关键字，线程进行了同步处理，线程0运行完了，释放内部锁之后，线程1才能执行。</p>
+<p><strong>关于synchronized关键字的几点说明：</strong></p>
+<blockquote>
+<p>1) 当一个线程正在访问对象的synchronized方法，其他线程不能再访问该对象的其他synchronized方法，因为一个对象只有一个互斥锁；<br>2) 当一个线程正在访问对象的synchronized方法，其他线程可以访问该对象的非synchronized方法；<br>3) 访问同一个类的不同对象实例的synchronized方法，不存在线程安全问题。</p>
+</blockquote>
+<h3 id="同步阻塞机制（也称为synchronized代码块）"><a href="#同步阻塞机制（也称为synchronized代码块）" class="headerlink" title="同步阻塞机制（也称为synchronized代码块）"></a>同步阻塞机制（也称为synchronized代码块）</h3><p>java中还有另外一种获取锁的方式：synchronized代码块。</p>
+<p>有的时候把一整个方法声明为synchronized并不一定合适，比如该方法中只有一部分代码需要同步互斥访问，这个时候可以使用synchronized代码块，只对需要同步的那部分代码进行同步。</p>
+<p>举例子，上面的代码可以将printNum方法声明synchronized代码块：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrintNum</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Object object = <span class="keyword">new</span> Object();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printNum</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (object) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) </span><br><span class="line">            &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">" print num "</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明一点，这里定义的是static方法，并没有定义PrintNum对象，所以不光对象实例有锁，类也有锁。</p>
+<p><strong>Tips:</strong></p>
+<blockquote>
+<ol>
+<li>如果一个线程执行对象的非static synchronized方法，另一个线程执行该类的static synchronized方法，不存在互斥问题，因为访问static synchronized方法占用的是类锁，访问非static synchronized方法占用的是对象锁，所以不存在资源互斥的问题；</li>
+<li>对于synchronized方法或者synchronized代码块，当出现异常时，JVM会自动释放当前线程占用的锁，因此不会由于异常导致出现死锁现象。</li>
+</ol>
+</blockquote>
+<h3 id="volatile域"><a href="#volatile域" class="headerlink" title="volatile域"></a>volatile域</h3><p>volatile也是java提供的一种轻量级的同步机制。</p>
+<p>有的时候，仅仅为了读写一两个实例域就使用同步锁，开销会比较大，那么就可以考虑使用volatile域。</p>
+<p>volatile为实例域的同步访问提供了一种免锁机制，如果声明一个域为volatile，那么编译期虚拟机就知道该域是被另一个线程并发更新的。</p>
+<p><strong>并发编程中的三个概念：</strong></p>
+<blockquote>
+<ol>
+<li>原子性：一个操作要么全部执行并且执行的过程中不允许中断，要么不执行；</li>
+<li>可见性：是指当多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程也能立即看到修改的值；</li>
+<li>有序性：是指程序执行的顺序按照代码的先后顺序执行。<br>volatile可以保证共享变量的可见性和有序性，不能保证共享变量的原子性。</li>
+</ol>
+</blockquote>
+<p>被volatile修饰的变量，会强制将修改的值立即写入主存，这样其他线程就可以知道该变量的值得到了修改，从而保证了可见性；被volatile修饰的变量，禁止指令重排，保证了有序性。</p>
+<h3 id="阻塞队列"><a href="#阻塞队列" class="headerlink" title="阻塞队列"></a>阻塞队列</h3><p>队列分为非阻塞队列和阻塞队列。非阻塞队列的一个问题是，不会对当前线程产生阻塞，那么在面对类似消费者-生产者模型时，就必须额外的实现同步机制来保证线程安全。</p>
+<p>阻塞队列，可以对当前线程产生阻塞，如果一个线程从空的阻塞队列中读取元素，或者往一个满的阻塞队列中放入元素，线程都会被阻塞，直到阻塞队列满足当前的操作，被阻塞的队列会自动被唤醒。</p>
+<h4 id="常见的阻塞队列"><a href="#常见的阻塞队列" class="headerlink" title="常见的阻塞队列"></a>常见的阻塞队列</h4><p><strong>LinkedBlockingQueue</strong>:基于链表实现的阻塞队列，如果没有指定队列容量大小，默认大小为Integer.MAX_VALUE;<br><strong>ArrayBlockingQueue</strong>:基于数组实现的阻塞队列，在构造该队列对象时，必须指定容量，并且有一个可选的参数来指定时候需要公平性，如果设置了公平参数，那么等待了最长时间的线程会得到处理，一般，公平性会牺牲性能，所以默认是非公平的。<br><strong>PriorityBlockingQueue</strong>:上面两种队列都是先进先出的队列，PriorityBlockingQueue是带优先级的队列，元素按照优先级顺序从队列移出。且该队列是无界阻塞队列，容量没有上限，上面两种队列都是有界队列。<br><strong>DelayQueue</strong>:基于PriorityQueue，一种延时阻塞队列，DelayQueue中的元素只有当指定的时间到了，才能够从队列中获取到该元素，DelayQueue也是无界队列。</p>
+<h4 id="非阻塞队列和阻塞队列的方法"><a href="#非阻塞队列和阻塞队列的方法" class="headerlink" title="非阻塞队列和阻塞队列的方法"></a>非阻塞队列和阻塞队列的方法</h4><p><strong>1. 非阻塞队列的几个主要方法：</strong><br>add(E e)：将元素e插入到队列尾部，如果插入成功，返回true，如果插入失败（如队列满），则抛出异常；<br>remove():移除队列首元素，若移除成功，则返回true，否则抛异常；<br>offer(E e)：将元素e插入到队列尾部，插入成功，返回true，否则返回false；<br>poll():移除并获取队列首元素，获取成功返回队首元素，失败返回null；<br>peek():获取队列首元素，若成功，则返回队首元素，失败返回null。</p>
+<p>对于非阻塞队列，一般情况下建议使用offer、poll和peek三个方法，不建议使用add和remove方法，因为这样可以通过返回值判断操作成功与否。注意非阻塞队列中的方法都没有进行同步处理。</p>
+<p><strong>2. 阻塞队列的几个主要方法：</strong><br>阻塞队列包括非阻塞队列中的大部分方法，上面列举的5个方法在阻塞队列中都存在，但是要注意这5个方法在阻塞队列中都进行了同步处理，除此之外，阻塞队列提供了另外4个非常有用的方法：</p>
+<p>put(E e)：向队尾存入元素，如果队列满，则等待；<br>take()：从队首取元素，如果队列空，则等待；<br>offer(E e, long timeout, TimeUnit unit)：向队尾存入元素，如果队列满，等待一定时间，到达等到时间上限，如果还没有插入成功，则返回false，否则返回true；<br>poll(long timeout, TimeUnit unit)：从队首取元素，如果空，则等待一定时间，如果还是没有取到，则返回null，否则返回取到的元素。</p>
+<h3 id="线程安全的集合"><a href="#线程安全的集合" class="headerlink" title="线程安全的集合"></a>线程安全的集合</h3><p>上面讨论的阻塞队列就是线程安全的集合，java.util.concurrent还提供了一些其他的线程安全的集合：<br>线程安全的map：<br>ConcurrentHashMap:构造一个可以被多线程访问的hashmap<br>ConcurrentSkipListMap:构造一个可以被多线程安全访问的有序map</p>
+<p>线程安全的set：<br>ConcurrentSkipListSet:构造一个可以被多线程安全访问的有序集</p>
+<p>线程安全的queuue：<br>ConcurrentLinkedQueue:构造一个可以被多个线程安全访问的无边界的非阻塞队列</p>
+<h3 id="同步包装器"><a href="#同步包装器" class="headerlink" title="同步包装器"></a>同步包装器</h3><p>Vector和Hashtable提供了线程安全的动态数组和散列表的实现，ArrayList和HaspMap不是线程安全的，但是可以通过同步包装器变成线程安全的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;T&gt; synchArrayList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList &lt;&gt;());</span><br><span class="line">Map&lt;K,V&gt; synchHashMap = Collections.synchronizedMap(<span class="keyword">new</span> HashMap &lt;&gt;());</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/22/说说java中的多线程-一/" rel="next" title="说说java中的多线程(一)">
+                <i class="fa fa-chevron-left"></i> 说说java中的多线程(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/22/说说java中的多线程-三/" rel="prev" title="说说java中的多线程(三)">
+                说说java中的多线程(三) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description">welcome to i2Life's page</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程同步"><span class="nav-number">1.</span> <span class="nav-text">线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized机制"><span class="nav-number">1.1.</span> <span class="nav-text">synchronized机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步阻塞机制（也称为synchronized代码块）"><span class="nav-number">1.2.</span> <span class="nav-text">同步阻塞机制（也称为synchronized代码块）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile域"><span class="nav-number">1.3.</span> <span class="nav-text">volatile域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞队列"><span class="nav-number">1.4.</span> <span class="nav-text">阻塞队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的阻塞队列"><span class="nav-number">1.4.1.</span> <span class="nav-text">常见的阻塞队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非阻塞队列和阻塞队列的方法"><span class="nav-number">1.4.2.</span> <span class="nav-text">非阻塞队列和阻塞队列的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程安全的集合"><span class="nav-number">1.5.</span> <span class="nav-text">线程安全的集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步包装器"><span class="nav-number">1.6.</span> <span class="nav-text">同步包装器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">2.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
