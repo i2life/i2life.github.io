@@ -87,13 +87,14 @@
 <meta property="og:site_name" content="i2Life">
 <meta property="og:description" content="其实很早之前就开始用hexo写博客了，hexo是一个快速、简洁且高效的博客框架。Node.js带来的超快生成速度，可以让上百个页面在几秒钟内完成渲染，而且hexo对markdown的友好支持，再加上其超强的插件系统，可以让用户很方便地搭建一套自己的博客站点，然后将博客页面托管到github page，一切都很优雅很方便。 然而直到有一天，我的老联想b460挂了，一块年久失修的硬盘停止了工作，里面除">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://raw.githubusercontent.com/i2life/imageBed/master/git.JPG">
 <meta property="og:image" content="https://raw.githubusercontent.com/i2life/imageBed/master/hexo.JPG">
 <meta property="og:image" content="https://raw.githubusercontent.com/i2life/imageBed/master/config.JPG">
-<meta property="og:updated_time" content="2019-10-01T01:10:18.753Z">
+<meta property="og:updated_time" content="2019-10-01T01:16:46.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo博客备份">
 <meta name="twitter:description" content="其实很早之前就开始用hexo写博客了，hexo是一个快速、简洁且高效的博客框架。Node.js带来的超快生成速度，可以让上百个页面在几秒钟内完成渲染，而且hexo对markdown的友好支持，再加上其超强的插件系统，可以让用户很方便地搭建一套自己的博客站点，然后将博客页面托管到github page，一切都很优雅很方便。 然而直到有一天，我的老联想b460挂了，一块年久失修的硬盘停止了工作，里面除">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/i2life/imageBed/master/hexo.JPG">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/i2life/imageBed/master/git.JPG">
 
 
 
@@ -357,7 +358,7 @@
       
         <p>其实很早之前就开始用hexo写博客了，hexo是一个快速、简洁且高效的博客框架。Node.js带来的超快生成速度，可以让上百个页面在几秒钟内完成渲染，而且hexo对markdown的友好支持，再加上其超强的插件系统，可以让用户很方便地搭建一套自己的博客站点，然后将博客页面托管到github page，一切都很优雅很方便。</p>
 <p>然而直到有一天，我的老联想b460挂了，一块年久失修的硬盘停止了工作，里面除了一些美丽的老师的教学视频之外倒也没什么可惜，想着旧的不去新的不来，正好可以换个新电脑……</p>
-<p>一拍脑门才想起来，我的hexo博客似乎也好死不死的搭在这块硬盘上，这可咋整，翻了一下github上的仓库只有静态的页面文件，source文件不会自动上传到页面，也就是之前写的博客都没了，而，肠子都悔青了，看来之前压根没有考虑到博客备份，重新再搭一个博客，又没法接着之前的博客地址继续写，要把之前的博客内容搬过来，又没有备份文件，除非去老博客的网页把内容复制下来，调成markdown格式，再重新部署到新博客。。。人肉成本太大了</p>
+<p>一拍脑门才想起来，我的hexo博客似乎也好死不死的搭在这块硬盘上，这可咋整，翻了一下github上的仓库只有静态的页面文件，source文件不会自动上传到页面，也就是之前写的博客都没了，肠子都悔青了，看来之前压根没有考虑到博客备份，重新再搭一个博客，又没法接着之前的博客地址继续写，要把之前的博客内容搬过来，又没有备份文件，除非去老博客的网页把内容复制下来，调成markdown格式，再重新部署到新博客。。。人肉成本太高了。</p>
 <p>痛定思痛，重新搭了一个博客，搬了几篇老博客的内容，对于价值不大的一些博客就让他们跟那块古老的希捷硬盘一起牺牲吧，那么对新博客一定要做好备份工作。</p>
 <p>看网上有的说复制到网盘啊，感觉都比价麻烦，后来看到一个通过github分支备份的方法，觉得比较靠谱，也比较简单，就采取了这种方法：</p>
 <p><strong>stpe1：创建分支</strong><br>创建一个新分支hexo:</p>
@@ -366,6 +367,7 @@
 <p>可以查看当前所在分支：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
 
+<p><img src="https://raw.githubusercontent.com/i2life/imageBed/master/git.JPG" alt></p>
 <p><strong>step2：将github仓库的默认分支改成hexo分支</strong><br>理论上通过step1，在github仓库上应该可以看到hexo分支了，如果没有，在github仓库上手动创建一个hexo分支即可。</p>
 <p><img src="https://raw.githubusercontent.com/i2life/imageBed/master/hexo.JPG" alt><br><strong>step2：将本地修改备份到hexo分支</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add ./</span><br><span class="line">git commit -m "backup"</span><br><span class="line">git push -u origin hexo</span><br></pre></td></tr></table></figure>
