@@ -75,10 +75,26 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 #theme: diaspora
 theme: next
+baidu_url_submit:
+  count: 100 ## 比如100，代表提交最新的一百个链接
+  host: i2life.github.io ## 在百度站长平台中注册的域名
+  token: AHZSDJNjoNMMzuxt ## 刚刚复制的秘钥，不要公布到任何地方。
+  path: baidu_urls.txt ## 文本文档的地址，新链接会保存在此文本文档里
+  
+  
+math:
+  engine: 'mathjax' # or 'katex'
+  mathjax:
+    # src: custom_mathjax_source
+    config:
+      # MathJax config
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: 
-  type: git
-  repo: https://github.com/i2life/i2life.github.io.git
-  branch: master
+ - type: git
+   repo: https://github.com/i2life/i2life.github.io.git
+   branch: master
+  
+ - type: baidu_url_submitter # 注意，这个为新增的
