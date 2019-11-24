@@ -265,6 +265,233 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的泛型-二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content>
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="i2Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/22/说说java中的泛型-二/" itemprop="url">说说java中的泛型(二)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-22T12:24:01+08:00">
+                2019-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="类型变量的限定"><a href="#类型变量的限定" class="headerlink" title="类型变量的限定"></a>类型变量的限定</h2><p>上一篇中，我们知道了泛型类、泛型接口、泛型的方法的定义和使用。</p>
+<p>现在我们定义一个泛型方法，找到两个数中的最小值:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getMin</span><span class="params">(T num1, T num2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">return</span> num1.compareTo(num2) &lt; <span class="number">0</span> ? num1 : num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果直接这样定义，编译器会报错,无法解析compareTo方法。</p>
+<p>因为num1类型是一个泛型T，编译器不能确定该对象是否实现了compareTo方法，那么怎么来保证T类型的变量一定实现了compareTo方法呢？通过类型限定：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Comparable&gt; <span class="function">T <span class="title">getMin</span><span class="params">(T num1, T num2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">return</span> num1.compareTo(num2) &lt; <span class="number">0</span> ? num1 : num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>T extends Comparale限定T必须是实现了Comparable接口的类型。</p>
+<p>一个类型变量可以有多个限定，基本语法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//限定类型用&amp;分隔，类型变量用，分隔</span></span><br><span class="line">&lt;T extends Type1 &amp; Type2, U extends Type3&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由于TypeT可根据java的继承规则，可以是类也可以是接口，所以这里用关键字extends，表示T是Type的字类型。</p>
+<p><strong>根据java的继承规则，限定列表中可以有多个接口类型，但是最多只能有一个类，如果一个类作为限定，则类必须是限定列表的第一个。</strong></p>
+<h2 id="类型擦除"><a href="#类型擦除" class="headerlink" title="类型擦除"></a>类型擦除</h2><p>通过上面的一些例子，我们能看到泛型的用处，但是，泛型特性并不是java一开始就有的特性，而是在java1.5才引入的，那么为了跟引入泛型特性之前的代码保持兼容，就必须的做些事情。</p>
+<p>因为java1.5前的代码并没有泛型的概念，所以java泛型只能用于在编译期间的静态类型检查，通过编译生成的代码要进行类型擦除，相当于擦掉泛型的痕迹，这样到了运行期JVM就感知不到泛型的存在了，从而能够跟以前的代码保持兼容。</p>
+<p>简单理解就是，为了跟以前的代码保持兼容，java虚拟机没有泛型类型对象，所以无论何时定义一个泛型类型，通过编译器后都要进行类型擦除。</p>
+<p><strong>类型擦除的规则：</strong></p>
+<blockquote>
+<p>擦除类型变量，并替换为限定类型列表里的第一个限定类型，如果没有给出限定类型，则用Object替换。</p>
+</blockquote>
+<h3 id="example-1-有限定列表的类型擦除"><a href="#example-1-有限定列表的类型擦除" class="headerlink" title="example 1:有限定列表的类型擦除"></a>example 1:有限定列表的类型擦除</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Comparable&gt; <span class="function">T <span class="title">getMin</span><span class="params">(T num1, T num2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1.compareTo(num2) &lt; <span class="number">0</span> ? num1 : num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类型擦除后：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Comparable <span class="title">getMin</span><span class="params">(Comparable num1, Comparable num2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> num1.compareTo(num2) &lt; <span class="number">0</span> ? num1 : num2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="example-2-无限定列表的类型擦除"><a href="#example-2-无限定列表的类型擦除" class="headerlink" title="example 2:无限定列表的类型擦除"></a>example 2:无限定列表的类型擦除</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Result</span>&lt;<span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> T value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getValue</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(T value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类型擦除后：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Result</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Object value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getValue</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(Object value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="类型擦除跟多态的冲突"><a href="#类型擦除跟多态的冲突" class="headerlink" title="类型擦除跟多态的冲突"></a>类型擦除跟多态的冲突</h3><p>类型擦除带来一个问题，会跟多态冲突，我们看一个导致冲突的例子：</p>
+<p>定义一个泛型类Person，有一个contactPerson成员，由于联系人可能是一个字符串表示电话号码，也可能是一个Father对象表示Father作为联系人的相关信息，也可能是一个Mother对象等，所以这里定义contactPerson类型为泛型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span>&lt;<span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> T contactPerson;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getContactPerson</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> contactPerson;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(T contactPerson)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.contactPerson = contactPerson;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定义一个学生类继承Person类，我们在学生类里覆盖setContactPerson方法，我们认为如果是学生，就把联系人定位老师，在setContactPerson方法里添加是”contact person is teacher“的描述：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span>&lt;<span class="title">String</span>&gt;</span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(String contactPerson)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.setContactPerson(<span class="string">"contact person is teacher "</span> + contactPerson);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在main函数如下调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Student xiaoming = <span class="keyword">new</span> Student();</span><br><span class="line">        Person&lt;String&gt; p1 = xiaoming;</span><br><span class="line">        p1.setContactPerson(<span class="string">"025-11111111"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Person<string> p1 = xiaoming;这里将父类的变量指向子类的引用，子类对父类的方法进行重写，这其实就是多态，p1.setContactPerson(“025-11111111”);调用的是子类对象的方法。</string></p>
+<p>类型擦除之后：<br>父类Person</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Object contactPerson;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">getContactPerson</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> contactPerson;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(Object contactPerson)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.contactPerson = contactPerson;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>子类Student</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(String contactPerson)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.setContactPerson(<span class="string">"contact person is teacher "</span> + contactPerson);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们看到经过类型擦除，父类的方法是public void setContactPerson(Object contactPerson),子类的方法是public void setContactPerson(String contactPerson)，子类方法和父类方法只是函数名相同，但是方法签名里的参数类型不一样了，这时候按照传统的理解是函数重载，而不是重写了，我们本意是实现多态，我们发现类型擦除导致了跟多态的冲突。</p>
+<p>那么我们看一下我们上面的分析是不是对的，进行如下的test：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Student xiaoming = <span class="keyword">new</span> Student();</span><br><span class="line">        Person p1 = xiaoming;</span><br><span class="line">        p1.setContactPerson(<span class="keyword">new</span> Object());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>传入Obejct类型的参数，这个时候如果是重载的话，就会调用父类的setContactPerson方法，但是出现了运行异常：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.ClassCastException: java.base/java.lang.Object cannot be cast to java.base/java.lang.String</span><br><span class="line">	at com.Student.setContactPerson(Student.java:<span class="number">3</span>)</span><br><span class="line">	at com.Main.main(Main.java:<span class="number">9</span>)</span><br></pre></td></tr></table></figure>
+
+<p>无法将Object类型转换为String类型，而且报错的位置是Student的方法，这说明并没有发生重载，仍然是重写，调用的仍然是子类的方法，那这是为什么呢？</p>
+<p>这是因为JVM自动采用了一种<strong>桥方法</strong>的办法来解决类型擦除跟多态的冲突。</p>
+<p>对Student.class文件反编译一下:javap -c Student.class，得到如下结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Compiled from <span class="string">"Student.java"</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">Student</span> <span class="keyword">extends</span> <span class="title">com</span>.<span class="title">Person</span>&lt;<span class="title">java</span>.<span class="title">lang</span>.<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> com.Student();</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       1: invokespecial #1                  // Method com/Person."&lt;init&gt;":()V</span><br><span class="line">       <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(java.lang.String)</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       <span class="number">1</span>: aload_1</span><br><span class="line">       2: invokedynamic #2,  0              // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;</span><br><span class="line">       7: invokespecial #3                  // Method com/Person.setContactPerson:(Ljava/lang/Object;)V</span><br><span class="line">      <span class="number">10</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(java.lang.Object)</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       <span class="number">1</span>: aload_1</span><br><span class="line">       2: checkcast     #4                  // class java/lang/String</span><br><span class="line">       5: invokevirtual #5                  // Method setContactPerson:(Ljava/lang/String;)V</span><br><span class="line">       <span class="number">8</span>: <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们看到Student类反编译后里面有两个方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7: invokespecial #3                  // Method com/Person.setContactPerson:(Ljava/lang/Object;)V</span><br><span class="line">5: invokevirtual #5                  // Method setContactPerson:(Ljava/lang/String;)V</span><br></pre></td></tr></table></figure>
+
+<p>并且可以看出这两个方法的关系是:7: invokespecial #3 // Method com/Person.setContactPerson:(Ljava/lang/Object;)V调用5: invokevirtual #5 // Method setContactPerson:(Ljava/lang/String;)V。</p>
+<p>也就是说JVM自动生成了一个额外的桥方法，也就是类型擦除后，Student类的真实面目是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(String contactPerson)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.setContactPerson(<span class="string">"contact person is teacher "</span> + contactPerson);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContactPerson</span><span class="params">(Object contactPerson)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    	setContactPerson((String)contactPerson);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样子类和父类都拥有public void setContactPerson(Object contactPerson)方法，即使传入的参数类型是Object对象，调用的也是子类方法，只不过子类方法再调用了一次public void setContactPerson(String contactPerson)，通过上面的分析，可以看到JVM就是通过桥方法解决类型擦除跟多态之前的冲突的。</p>
+<p>进一步考虑一下，setContactPerson是有参数列表的，如果子类Student还重写了父类的getContactPerson()方法呢，这个时候类型擦除了之后，父类的getContactPerson为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getContactPerson</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> contactPerson;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>子类的getContactPerson方法为：</p>
+<p>public String getContactPerson()<br>{<br>    retrn super.getContactPerson();<br>}<br>只有返回值不一样，这其实就是正常的重写，按道理不需要桥方法过渡了，我们看一下编译后的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Compiled from <span class="string">"Student.java"</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">Student</span> <span class="keyword">extends</span> <span class="title">com</span>.<span class="title">Person</span>&lt;<span class="title">java</span>.<span class="title">lang</span>.<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> com.Student();</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       1: invokespecial #1                  // Method com/Person."&lt;init&gt;":()V</span><br><span class="line">       <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> java.lang.<span class="function">String <span class="title">getContactPerson</span><span class="params">()</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       1: invokespecial #2                  // Method com/Person.getContactPerson:()Ljava/lang/Object;</span><br><span class="line">       4: checkcast     #3                  // class java/lang/String</span><br><span class="line">       <span class="number">7</span>: areturn</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> java.lang.<span class="function">Object <span class="title">getContactPerson</span><span class="params">()</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       1: invokevirtual #4                  // Method getContactPerson:()Ljava/lang/String;</span><br><span class="line">       <span class="number">4</span>: areturn</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们看到JVM仍然为getContactPerson生成了一个桥方法：public java.lang.Object getContactPerson();，那这个时候Student类进行类型擦除后，有两个getContactPerson()方法，它们的区别仅仅是返回值类型不一样，按道理这编译都会报错的，会报方法冲突的。<br>**<br>这是因为在虚拟机中用参数列表和返回值类型一起来确定一个方法，所以不会有方法冲突。所以这里跟编译器只通过参数列表来确定一个方法是不同的。**</p>
+<p><strong>关于类型擦除的几点总结：</strong></p>
+<blockquote>
+<ol>
+<li>虚拟机中没有泛型，只有普通类和方法；</li>
+<li>所有类型参数都用限定类型或者Object替换；</li>
+<li>JVM通过桥方法来保持多态；</li>
+<li>为保持类型安全性，必要时插入强制类型转换。</li>
+</ol>
+</blockquote>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/22/说说java中的泛型-一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1880,171 +2107,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的反射机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="i2Life">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/10/说说java中的反射机制/" itemprop="url">说说java中的反射机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T16:22:31+08:00">
-                2019-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="反射的基本概念"><a href="#反射的基本概念" class="headerlink" title="反射的基本概念"></a>反射的基本概念</h2><p>首先区分两个概念：编译期和运行期。编译期指编译器将源代码编译生成机器码的过程，比如将java文件编译生成.class字节码文件；运行期是对编译后的可执行文件进行执行的过程。反射机制正是工作在运行期。</p>
-<p><strong>在程序运行期间，动态获取对象信息以及动态调用类的属性和方法的能力即为java的反射机制。</strong></p>
-<h2 id="反射机制"><a href="#反射机制" class="headerlink" title="反射机制"></a>反射机制</h2><p>java在运行时，始终为所有的对象维护一个运行时的类型标识，保存对象的基本信息。该类型标识也是一个类，即Class类。<br>我们知道根类Object有一个方法getClass，该方法即返回一个Class对象，也就是返回对象的类型标识信息。</p>
-<h3 id="获取Class对象的三种方式"><a href="#获取Class对象的三种方式" class="headerlink" title="获取Class对象的三种方式"></a>获取Class对象的三种方式</h3><h4 id="方法一：类名-Class"><a href="#方法一：类名-Class" class="headerlink" title="方法一：类名.Class"></a>方法一：类名.Class</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student是一个类</span></span><br><span class="line">Class aClass = Student.class;</span><br></pre></td></tr></table></figure>
-
-<h4 id="方法二：对象实例-getClass"><a href="#方法二：对象实例-getClass" class="headerlink" title="方法二：对象实例.getClass()"></a>方法二：对象实例.getClass()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Student xiaoming = <span class="keyword">new</span> Student();</span><br><span class="line">Class bClass = xiaoming.getClass();</span><br></pre></td></tr></table></figure>
-
-<h4 id="方法三：Class-forName"><a href="#方法三：Class-forName" class="headerlink" title="方法三：Class.forName()"></a>方法三：Class.forName()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//参数为带包路径的字符串</span></span><br><span class="line">Class cClass = Class.forName(<span class="string">"com.Student"</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="Class类的API方法"><a href="#Class类的API方法" class="headerlink" title="Class类的API方法"></a>Class类的API方法</h3><p>类的三大属性：Field、Method、Constructor分别描述类的域、方法以及构造器。</p>
-<p>对应的API(更多API参照API文档):</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">getFields();返回类的<span class="keyword">public</span>域(包含父类的<span class="keyword">public</span>成员)</span><br><span class="line">getDeclaredFields();返回类的全部域（不包含父类的成员）</span><br><span class="line"></span><br><span class="line">getMethods()；返回类的<span class="keyword">public</span>方法(包含父类的<span class="keyword">public</span>方法)</span><br><span class="line">getDeclaredMethods()；返回类的全部方法（不包含父类的方法）</span><br><span class="line"></span><br><span class="line">getConstructors()；返回类的<span class="keyword">public</span>构造器(包含父类的<span class="keyword">public</span>构造器)</span><br><span class="line">getDeclaredConstructors()；返回类的全部构造器（不包含父类的构造器）</span><br><span class="line"></span><br><span class="line">Modifier.isPublic(field.getModifiers())判断一个域是否为<span class="keyword">public</span>，<span class="keyword">private</span>以及<span class="keyword">protected</span>类似判断。</span><br></pre></td></tr></table></figure>
-
-<h3 id="访问类的私有成员"><a href="#访问类的私有成员" class="headerlink" title="访问类的私有成员"></a>访问类的私有成员</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student类有一个私有成员idNumber</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String idNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getIdNumber</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIdNumber</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过反射访问打印出来idNumber</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;</span><br><span class="line">        Student xiaoming = <span class="keyword">new</span> Student(<span class="string">"2008001"</span>);</span><br><span class="line">        Class aClass = xiaoming.getClass();</span><br><span class="line">        <span class="comment">//获取idNumber私有成员</span></span><br><span class="line">        Field field = aClass.getDeclaredField(<span class="string">"idNumber"</span>);</span><br><span class="line">        <span class="comment">//设置访问权限为可见</span></span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//获取该成员的当前状态</span></span><br><span class="line">        Object object = field.get(xiaoming);</span><br><span class="line">        System.out.println(<span class="string">"print studnet's idNumber by reflect: "</span>+object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print studnet<span class="string">'s idNumber by reflect: 2008001</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="访问类的私有方法"><a href="#访问类的私有方法" class="headerlink" title="访问类的私有方法"></a>访问类的私有方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student类添加一个私有方法</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String idNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getIdNumber</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIdNumber</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个私有方法，更新学号，学号前面统一加上111</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateIdNumber</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"The new idNumber is: "</span> + <span class="string">"111"</span> + idNumber);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过反射访问该私有方法</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Student xiaoming = <span class="keyword">new</span> Student(<span class="string">"2008001"</span>);</span><br><span class="line">        Class aClass = xiaoming.getClass();</span><br><span class="line">        <span class="comment">//获取该私有方法，参数为方法名，和参数类型</span></span><br><span class="line">        Method method = aClass.getDeclaredMethod(<span class="string">"updateIdNumber"</span>,String.class);</span><br><span class="line">        <span class="comment">//设置访问权限</span></span><br><span class="line">        method.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//invoke访问</span></span><br><span class="line">        method.invoke(xiaoming, xiaoming.getIdNumber());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The <span class="keyword">new</span> idNumber is: <span class="number">1112008001</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a><br><a href="http://blog.51cto.com/4247649/2109128" target="_blank" rel="noopener">http://blog.51cto.com/4247649/2109128</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2095,7 +2157,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

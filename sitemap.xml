@@ -2,14 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2019/10/01/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/</loc>
+    <loc>http://yoursite.com/2019/11/24/tomcat%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/</loc>
     
-    <lastmod>2019-11-19T14:29:37.199Z</lastmod>
+    <lastmod>2019-11-24T12:21:08.792Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/16/%E8%AF%A6%E8%A7%A3Servlet/</loc>
+    <loc>http://yoursite.com/2019/10/01/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%A6%82%E8%BF%B0/</loc>
+    
+    <lastmod>2019-11-19T16:04:33.527Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/16/Servlet%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3/</loc>
     
     <lastmod>2019-11-16T02:48:45.931Z</lastmod>
     
