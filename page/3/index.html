@@ -265,182 +265,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的反射机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content>
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="i2Life">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/10/说说java中的反射机制/" itemprop="url">说说java中的反射机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-10T16:22:31+08:00">
-                2019-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/基础知识/" itemprop="url" rel="index">
-                    <span itemprop="name">基础知识</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="反射的基本概念"><a href="#反射的基本概念" class="headerlink" title="反射的基本概念"></a>反射的基本概念</h2><p>首先区分两个概念：编译期和运行期。编译期指编译器将源代码编译生成机器码的过程，比如将java文件编译生成.class字节码文件；运行期是对编译后的可执行文件进行执行的过程。反射机制正是工作在运行期。</p>
-<p><strong>在程序运行期间，动态获取对象信息以及动态调用类的属性和方法的能力即为java的反射机制。</strong></p>
-<h2 id="反射机制"><a href="#反射机制" class="headerlink" title="反射机制"></a>反射机制</h2><p>java在运行时，始终为所有的对象维护一个运行时的类型标识，保存对象的基本信息。该类型标识也是一个类，即Class类。<br>我们知道根类Object有一个方法getClass，该方法即返回一个Class对象，也就是返回对象的类型标识信息。</p>
-<h3 id="获取Class对象的三种方式"><a href="#获取Class对象的三种方式" class="headerlink" title="获取Class对象的三种方式"></a>获取Class对象的三种方式</h3><h4 id="方法一：类名-Class"><a href="#方法一：类名-Class" class="headerlink" title="方法一：类名.Class"></a>方法一：类名.Class</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student是一个类</span></span><br><span class="line">Class aClass = Student.class;</span><br></pre></td></tr></table></figure>
-
-<h4 id="方法二：对象实例-getClass"><a href="#方法二：对象实例-getClass" class="headerlink" title="方法二：对象实例.getClass()"></a>方法二：对象实例.getClass()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Student xiaoming = <span class="keyword">new</span> Student();</span><br><span class="line">Class bClass = xiaoming.getClass();</span><br></pre></td></tr></table></figure>
-
-<h4 id="方法三：Class-forName"><a href="#方法三：Class-forName" class="headerlink" title="方法三：Class.forName()"></a>方法三：Class.forName()</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//参数为带包路径的字符串</span></span><br><span class="line">Class cClass = Class.forName(<span class="string">"com.Student"</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="Class类的API方法"><a href="#Class类的API方法" class="headerlink" title="Class类的API方法"></a>Class类的API方法</h3><p>类的三大属性：Field、Method、Constructor分别描述类的域、方法以及构造器。</p>
-<p>对应的API(更多API参照API文档):</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">getFields();返回类的<span class="keyword">public</span>域(包含父类的<span class="keyword">public</span>成员)</span><br><span class="line">getDeclaredFields();返回类的全部域（不包含父类的成员）</span><br><span class="line"></span><br><span class="line">getMethods()；返回类的<span class="keyword">public</span>方法(包含父类的<span class="keyword">public</span>方法)</span><br><span class="line">getDeclaredMethods()；返回类的全部方法（不包含父类的方法）</span><br><span class="line"></span><br><span class="line">getConstructors()；返回类的<span class="keyword">public</span>构造器(包含父类的<span class="keyword">public</span>构造器)</span><br><span class="line">getDeclaredConstructors()；返回类的全部构造器（不包含父类的构造器）</span><br><span class="line"></span><br><span class="line">Modifier.isPublic(field.getModifiers())判断一个域是否为<span class="keyword">public</span>，<span class="keyword">private</span>以及<span class="keyword">protected</span>类似判断。</span><br></pre></td></tr></table></figure>
-
-<h3 id="访问类的私有成员"><a href="#访问类的私有成员" class="headerlink" title="访问类的私有成员"></a>访问类的私有成员</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student类有一个私有成员idNumber</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String idNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getIdNumber</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIdNumber</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过反射访问打印出来idNumber</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;</span><br><span class="line">        Student xiaoming = <span class="keyword">new</span> Student(<span class="string">"2008001"</span>);</span><br><span class="line">        Class aClass = xiaoming.getClass();</span><br><span class="line">        <span class="comment">//获取idNumber私有成员</span></span><br><span class="line">        Field field = aClass.getDeclaredField(<span class="string">"idNumber"</span>);</span><br><span class="line">        <span class="comment">//设置访问权限为可见</span></span><br><span class="line">        field.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//获取该成员的当前状态</span></span><br><span class="line">        Object object = field.get(xiaoming);</span><br><span class="line">        System.out.println(<span class="string">"print studnet's idNumber by reflect: "</span>+object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print studnet<span class="string">'s idNumber by reflect: 2008001</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="访问类的私有方法"><a href="#访问类的私有方法" class="headerlink" title="访问类的私有方法"></a>访问类的私有方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Student类添加一个私有方法</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String idNumber;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getIdNumber</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIdNumber</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.idNumber = idNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个私有方法，更新学号，学号前面统一加上111</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">updateIdNumber</span><span class="params">(String idNumber)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"The new idNumber is: "</span> + <span class="string">"111"</span> + idNumber);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//通过反射访问该私有方法</span></span><br><span class="line"><span class="keyword">package</span> com;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Student xiaoming = <span class="keyword">new</span> Student(<span class="string">"2008001"</span>);</span><br><span class="line">        Class aClass = xiaoming.getClass();</span><br><span class="line">        <span class="comment">//获取该私有方法，参数为方法名，和参数类型</span></span><br><span class="line">        Method method = aClass.getDeclaredMethod(<span class="string">"updateIdNumber"</span>,String.class);</span><br><span class="line">        <span class="comment">//设置访问权限</span></span><br><span class="line">        method.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//invoke访问</span></span><br><span class="line">        method.invoke(xiaoming, xiaoming.getIdNumber());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果输出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The <span class="keyword">new</span> idNumber is: <span class="number">1112008001</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://www.douban.com/link2/?url=https%3A%2F%2Fbook.douban.com%2Fsubject%2F3146174%2F&query=java%E6%A0%B8%E5%BF%83%E7%BB%93%E6%9D%9F&cat_id=1001&type=search&pos=1" target="_blank" rel="noopener">java核心技术.卷一</a><br><a href="http://blog.51cto.com/4247649/2109128" target="_blank" rel="noopener">http://blog.51cto.com/4247649/2109128</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/10/说说java中的接口和抽象类/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -843,7 +667,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -902,7 +726,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
