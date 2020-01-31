@@ -90,7 +90,7 @@
 <meta property="og:description" content="idea现在越来越流行了，但是社区版的功能有限，比如创建web项目等不是很方便，于是看了网上的一些帖子，通过该方法可以破解ultimate版本（当然如果条件允许，还是要支持正版）。 step1：下载合适的idea版本这个网站可以下载各个版本的idea软件，我下载的是2018.3.6版本，不确定其他版本是否能正常破解。 下载ultimate版本并安装。 step2: 下载破解包下载链接，点击下载破解">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://raw.githubusercontent.com/i2life/imageBed/master/idea.JPG">
-<meta property="og:updated_time" content="2020-01-31T12:42:21.817Z">
+<meta property="og:updated_time" content="2020-01-31T12:52:53.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="idea ultimate版破解方法">
 <meta name="twitter:description" content="idea现在越来越流行了，但是社区版的功能有限，比如创建web项目等不是很方便，于是看了网上的一些帖子，通过该方法可以破解ultimate版本（当然如果条件允许，还是要支持正版）。 step1：下载合适的idea版本这个网站可以下载各个版本的idea软件，我下载的是2018.3.6版本，不确定其他版本是否能正常破解。 下载ultimate版本并安装。 step2: 下载破解包下载链接，点击下载破解">
@@ -359,7 +359,9 @@
         <p>idea现在越来越流行了，但是社区版的功能有限，比如创建web项目等不是很方便，于是看了网上的一些帖子，通过该方法可以破解ultimate版本（当然如果条件允许，还是要支持正版）。</p>
 <p><strong>step1：下载合适的idea版本</strong><br><a href="https://www.jetbrains.com/idea/download/other.html" target="_blank" rel="noopener">这个网站</a>可以下载各个版本的idea软件，我下载的是2018.3.6版本，不确定其他版本是否能正常破解。</p>
 <p>下载ultimate版本并安装。</p>
-<p><strong>step2: 下载破解包</strong><br><a href="https://github.com/i2life/imageBed/blob/master/tool/jetbrains-agent.jar" target="_blank" rel="noopener">下载链接</a>，点击下载破解包。</p>
+<p><strong>step2: 下载破解包</strong><br><a href="https://github.com/i2life/imageBed/blob/master/tool/jetbrains-agent.jar" target="_blank" rel="noopener">下载链接</a>，点击下载破解包。<br>并修改host文件：C:\WINDOWS\System32\drivers\etc目录hosts文件末尾添加一行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.0</span>.0.0 www.jetbrains.com</span><br></pre></td></tr></table></figure>
+
 <p><strong>step3: 将破解包放在</strong><br>将破解包放在安装idea的bin目录下，然后修改idea.exe.vmoptions,idea64.exe.vmoptions文件，在文件末尾加上：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-javaagent:D:\documents\Apps\Pycharm\PyCharm <span class="number">2018.3</span>.5\bin\jetbrains-agent.jar</span><br></pre></td></tr></table></figure>
 
