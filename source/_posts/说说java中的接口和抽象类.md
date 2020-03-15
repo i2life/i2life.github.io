@@ -2,7 +2,9 @@
 title: 说说java中的接口和抽象类
 date: 2019-08-10 16:14:34
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 
 在java中，抽象类和interface是面向对象编程的两个比较重要的概念，抽象类和interface都是为了对对象进行更好的抽象。二者有一些相似的地方，但也有很多不同之处，所以总结一下java的接口和抽象类。

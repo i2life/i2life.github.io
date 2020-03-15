@@ -2,7 +2,9 @@
 title: 说说java中的方法参数传递
 date: 2019-08-10 15:47:22
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 
 

@@ -2,7 +2,9 @@
 title: 说说java中的lambda表达式
 date: 2019-09-22 10:55:02
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 ambda表达式是java8推出的一个特性，使用lambda表达式可以很方便地传递代码块，使得代码更加的简洁，本文就主要说说java中的lambda表达式。
 

@@ -2,7 +2,9 @@
 title: 说说java中的多线程(三)
 date: 2019-09-22 16:58:44
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 
 今天总结一下java中跟多线程相关的两个接口：Callable接口和Future接口。

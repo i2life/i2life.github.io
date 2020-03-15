@@ -2,7 +2,9 @@
 title: 说说java中的集合框架
 date: 2019-09-22 12:39:41
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 选择合适的数据结构是优雅的解决问题的关键之一。
 

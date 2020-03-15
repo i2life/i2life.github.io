@@ -2,7 +2,9 @@
 title: 说说java中的泛型(三)
 date: 2019-09-22 12:32:07
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 
 ## 泛型中的继承规则

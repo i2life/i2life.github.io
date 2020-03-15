@@ -2,7 +2,9 @@
 title: 说说java中的static关键字
 date: 2019-09-22 11:01:15
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 
 java中的static关键字用的地方还是挺多的，静态变量、静态方法、静态代码块等等，感觉需要好好总结一下，本文就说说java中的static关键字。

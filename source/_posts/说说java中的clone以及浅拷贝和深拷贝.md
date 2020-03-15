@@ -2,7 +2,9 @@
 title: 说说java中的clone以及浅拷贝和深拷贝
 date: 2019-08-10 16:31:37
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 ## java中的clone方法
 超类Object有一个protected的方法clone()，该方法返回Object对象的一个拷贝。我们知道所有的类都继承自Object，也就是所有的类都有clone方法，是不是直接调用clone()方法就可以对一个对象进行克隆呢？

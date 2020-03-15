@@ -2,7 +2,9 @@
 title: 说说java中的代理
 date: 2019-09-21 22:31:58
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 
 代理是java中很重要的一个概念，尤其在学习java框架的时候，像spring的AOP都是基于动态代理实现的，所以今天就说说java中的代理机制。

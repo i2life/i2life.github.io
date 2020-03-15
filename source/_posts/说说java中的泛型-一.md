@@ -2,7 +2,9 @@
 title: 说说java中的泛型(一)
 date: 2019-09-22 12:16:20
 tags: Java
-categories: Java
+categories: 
+			- Java
+			- 基础知识
 ---
 ## 泛型概念
 ### 什么是泛型？
